@@ -30,7 +30,7 @@ if (navigationBackground) {
 const title = new Typewriter(document.getElementById("headerTitle"));
 const subtitle = new Typewriter(document.getElementById("headerSubtitle"), [
     "Software Engineer", "Game Developer", "Game Designer", "Git Commiter", 
-    "Web Developer", "Network Administrator", "Car Enthusiast", "Tabs User", 
+    "Web Developer", "Network Administrator", "Car Enthusiast", "Tabs, not spaces...", 
     "Coffee Drinker", "Night Owl", "PC Builder", "System Designer", "CWEBBY", 
     "Pizza Expert", "DIY-er", "Visual FX Programmer", "Masters Graduate", "Code Cowboy",
     "Overclocker", "Modder", "Matrix Multiplier", "Raytracer", "camelCaseUser", "Grease Monkey"

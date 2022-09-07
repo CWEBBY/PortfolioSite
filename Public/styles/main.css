@@ -16,10 +16,11 @@ footer {
 	text-align: center;
 	background-color: #484848;
 }
-h2 { 
-	height: 1.5rem; 
-	font-size: 1.5rem; 
-	font-style: italic;	
+h2 {
+	height: 1.5rem;
+	font-size: 1.5rem;
+	font-style: italic;
+	border-bottom-left-radius: .75vw;
 }
 h1, h2 {
 	font-weight: lighter;
@@ -27,6 +28,9 @@ h1, h2 {
 	padding: 0 1rem;
 	margin: auto;
 	border-left: 1.5vw solid #484848;
+}
+h1 {
+	border-top-left-radius: .75vw;
 }
 nav {
 	z-index:  99;
