@@ -1,0 +1,407 @@
+<!--
+ * File: ~/index.html
+ * Author: CWebb
+ * Description: 
+ * In it's 'nuts-and-bolts, lean and mean' revision, CSS, HTML and JS have all been reworked to their best so far. 
+ * With async download, organised shader compile and even a naive implementation of a custom include system for the GL akin to HLSL's .cginc.
+ * Basically a rewrite of the rendering system almost like an engine's system.
+ * Seriously proud of this, given that it's a site done in an IDE.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta lang="en">
+	<meta charset="UTF-8">
+	<title>Christopher Webb | Portfolio</title>
+	<meta name="author" content="Christopher Webb">
+	<link rel='stylesheet' type="text/css" href='styles/main.css'>
+	<noscript><link rel='stylesheet' type="text/css" href='styles/noscript.css'></noscript>
+	<script type="module" src="scripts/main.js"></script>
+	<link rel="icon" type="image/png" href="resources/images/icons/favicon.png">
+	<meta name="description" content="A portfolio site for the works of Christopher Webb.">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<link rel='stylesheet' type="text/css" href='https://fonts.googleapis.com/css2?family=Abel'>
+</head>
+	<body>
+		<header id="home">
+			<canvas id="headerGL"></canvas>
+			<div id="headerDock" class="dock"></div>
+			<div class="nametag">
+				<h1 id="headerTitle">Christopher Webb</h1>
+				<h2 id="headerSubtitle">Software Engineer</h2>
+			</div>
+		</header>
+		<nav class="onlyScript">
+			<div id="navigationBackground"></div>
+			<div id="navigationForeground" class="toggle toggled">
+				<p class="menu">&#9776;</p>
+				<a href="#home">Home</a>
+				<div>
+					<a href="#about">About</a>
+					<a href="#portfolio">Portfolio</a>
+					<a href="#contact">Contact</a>
+				</div>
+			</div>
+		</nav>
+		<section id="about">
+			<div class="bio">	
+				<img class="mugshot" src="resources/images/mugshot.png">
+				<div class="description">
+					<h3>Hi there, I'm Chris.</h3>
+					<p>I'm an 'all-round' junior software designer/developer that has just finished relocating to Melbourne, Australia.</p>
+					<p>First and foremost, I'm a 'nuts-and-bolts' kind of person. If I can do it, chances are it's because I've done it before, pulled it apart, put it back together and pulled it apart again.</p>
+					<p>This 'build-and-rebuild' approach I've taken with learning is, partly, due to my fondness of automotive modification. Anyone in that world can tell you that experience, knowledge and wisdom come from knowing every nut and bolt, what it's job is and how it does said job, and there is no substitute for 'getting your hands dirty'.</p>
+					<p>Translating this into my time as a software developer, particularly one that has been gaming in their spare time from a young age, I tend to find fun things and dive deeply into them, understanding as much as I can on the topic. I've done this both in my time at the University of Newcastle but particularly in my 'after hours' learning where many late nights were had with weird and prototypical experiments with interesting lessons learned... and a lot of coffee.</p>
+					<p>Basically, with any chance I've gotten to explore the world of software development, particularly in games development, I've taken it as a chance to sharpen not only my usefulness on a team but also for my own curiosity.</p>
+					<h3>My official education includes:</h3>
+					<ul class="qualifications">
+						<li>Master of Information Technology, 2019<br>University of Newcastle - Callaghan, NSW</li>
+						<li>Bachelor of Information Technology, 2017<br>University of Newcastle - Callaghan, NSW
+							<ul>
+								<li>Major: Software Development and Applications</li>
+								<li>Major: Digital Media and Entertainment</li>
+								<li>Minor: Enterprise Information and Technology</li>
+							</ul>
+						</li>
+					</ul>
+					<p>Related course work: <em>Media and Communications, Internet Communications, Digital Media and Entertainment, Application Programming, Mobile Applications and the Cloud, Games Design, Information and Communication in Business, Web Programming, Social and Interactive Media, Digital Economy, Digital Culture, Project Management, Games Production, Media Production</em>... and others.</p>
+					<a class="button" target="_blank" href="/resources/documents/Christopher Webb, CV.pdf">Download my CV</a>
+				</div>
+			</div>
+			<div class="details">
+				<h3>Technical Details</h3>
+				<ul class="experiences">
+					<li class="experience toggle toggled">
+						<h3>C# & C++</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Skills in implementing compilation and execution in a variety of paradigms, such as the two most popular in the C family of languages, object-oriented and data-oriented.</li>
+							<li class="skill">Able to decide when and where to use design patterns such as the singleton pattern, command pattern, observer pattern, factory pattern, and so on, based on need, performance and extendibility.</li>
+							<li class="skill">Considerable experience in C# and C++ specifically, using the Mono, IL2PP and Coco compiler frameworks, as well as the expected engines such as Unity and Unreal.</li>
+							<li class="skill">Experience with compiling .dll (mostly managed but some unmanaged) libraries for later use in other projects with a reusable, extendible and portable design.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>GLSL & HLSL</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Visual effects and GPU programming capability - DirectX 3D HLSL and OpenGL GLSL(+ES & WebGL, Vulkan planned) both in and out of the games industry.</li>
+							<li class="skill">Theoretical and practical knowledge of 3D lighting (both traditionally rasterised and modern methods like ray tracing) as well as from scratch implementations of PBR (physically-based rendering).</li>
+							<li class="skill">Awareness of modern rasterised pipelines and practices with a drive to further push rendering innovation.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>PHP, ASP.Net & NodeJS</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Experience with the theory behind backend systems, while being able manage an entire LAMP stack as well applying a use-case to its best server environment, and deciding which application will be the most secure for both server and client.</li>
+							<li class="skill">Start-to-end design, creation and implementation of ASP.NET master/content page rendering, along with server configuration and accompanying C# logic in a MVC design.</li>
+							<li class="skill">PHP script writing for various data serving (everything from pages to binary data in a pesudo-rest API).</li>
+							<li class="skill">Multiple experiences with NodeJS deployments using it both in its normal environment as well as third-party deployments like Google's Firebase. This experience comes from the use of NodeJS packages like Express (the popular routing package), PugJS (a page rendering package), the built-ins and more. (NodeJS is my personal choice for backend).</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>SQL (T-SQL/MS-SQL & MySQL) & Python</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Experience with design, development and use of relational databases.</li>
+							<li class="skill">Comfortable with querying across single and multiple tables.</li>
+							<li class="skill">Ability to comfortably utilise Python and its various libraries.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>HTML, CSS, JavaScript, XML & XSLT</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Modern 'from scratch' standards of HTML and CSS design.</li>
+							<li class="skill">Client-side front-end JavaScript implementation grounded in a 'minimal impact, maximum performance' design methodology that creates dynamic and responsive aspects specific to design and audience.</li>
+							<li class="skill">XML integration and styling with XSLT.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>Bash, DOS & Powershell</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Ability to use most CLI languages, mostly for SSH use, however these have also been used for server coordination and backend creation.</li>
+							<li class="skill">Main uses include general CLI use as well as setup, maintenance and use of software such as Samba and VSFTP servers.</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="experiences">
+					<li class="experience toggle toggled">
+						<h3>Unity</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Proficient in scene composition, including with the use of scriptable objects, hierarchical structures, Monobehaviour, and raw C# classes.</li>
+							<li class="skill">Experience with the use of Unity's post-processing stack for visual effects, and the ability to create a new workable post-processing stack to suit specific visual requirements, including the use of command buffers.</li>
+							<li class="skill">Unity UI development and implementation, considering user needs and accessible design.</li>
+							<li class="skill">Ability to create dynamic asset management and building tools, including asset bundle building within Unity.</li>
+							<li class="skill">Use of ShaderLab and HLSL to create visual effects and utilise Unity's various rendering pipelines.</li>
+							<li class="skill">Experience with implementation and use of third-party packages such as Google's Firebase API and Google Play API.</li>
+							<li class="skill">Comfortable utilising Unity's profiler and debugging code.</li>
+							<li class="skill">Ability to use the editor's pre-existing tools, as well as the ability to create new tools on an ad hoc basis to support project development.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>Visual Studio & JetBrains IDEs</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Dynamic ability to utilise various IDEs and their associated debugging and profiling tools for quality assurance.</li>
+							<li class="skill">Experience with using various NuGet packages to provide functionality extensions where required.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>BAAS Platforms</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Experience with Google's Firebase. Specifically, the REST API allowing for RESTful use of Firestore and Realtime Database data stores using NoSQL-esque design as well as Google's Cloud Functions platform.</li>
+							<li class="skill">Plans to learn more BAAS uses such as automated testing using AWS Lambda in the future. This will be done using C#.NET, as AWS specifically allows for the running of unit testing frameworks in this case.</li>
+							<li class="skill">Interest in automation services, both in and out of house, such as automated building, for example, using Jenkins.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>Notepad++, Atom & VS Code</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Depending on how one looks at it, Notepad++'s bare editor nature being used for full development may be a bonus in a situation wherein an IDE may not able to be used, this is something I did for a while.</li>
+							<li class="skill">Using other lightweight editors, and portable development outside of an IDE, is skill I have developed comfortably as many deployments must be done outside of comfort of an IDE (for example, most non-compiled scripting).</li>
+							<li class="skill">Third-party package experience, using packages to build up an editor to suit project needs.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>Arduino & Raspberry Pi Chipsets</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Full knowledge of Arduino chipsets at assembly level, having used them, peripherals, and the assorted IDEs to plan, prototype, create and test interactive electronic creations such a module-based car control system built into the dashboard, as well as a synthesiser used to produce sound clips for game development.</li>
+							<li class="skill">Raspberry Pi experience that has resulted in the capability to utilise the ARM architecture for a multitude of purposes including web serving using NodeJS or Apache, Git and file servers, home automation, etc.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>GameMaker Studio</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Experience in the creation of small projects using the built-in engine tools to compile to Android, Windows and Linux platforms, specifically focusing in areas such as UI design and emulation as well as Haptics.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>SQL Server Management Studio & MySQL Workbench</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Experience using SQL in a command line setting, and through the use of both Microsoft's Server Management Studio & MySQL Workbench, with the ability to effectively navigate and utilise both platforms.</li>
+							<li class="skill">Ability to create, maintain, query, and edit databases across a variety of contexts.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>TortoiseSVN, TortoiseGit & Github</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Ability to utilise VCS such as SVN and Git to commit, push/pull, branch, tag, revert, rebase, conflict merge, and otherwise maintain project code.</li>
+							<li class="skill">Personal experience includes the use of front-ends such as TortoiseSVN and TortoiseGit, and the widely used Github for both individual and team projects.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>GIMP, Paint.NET & Aseprite</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Ability to use layers and frames to neatly, quickly and versatilely create animations that can be exported in several ways.</li>
+							<li class="skill">I have experience scripting some odd tools for certain situations, for example, as Aseprite has an exposed JavaScript layer, I have written tools to fit needs, such as a perlin noise generator that follows given value distributions.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>Adobe Creative Suite</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Use of Premiere Pro to edit, compose, master and export video.</li>
+							<li class="skill">Creation or editing of visual assets using Photoshop and Lightroom including the use of layers, filters and tools.</li>
+							<li class="skill">Editing PDF documents in Acrobat.</li>
+						</ul>
+					</li>
+					<li class="experience toggle toggled">
+						<h3>Microsoft Office Suite & Google Suite</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Highly capable in Word, Excel, PowerPoint and Access from tertiary training and wide use.</li>
+							<li class="skill">Proficiency in live, cooperative use of most Google applications used with team members towards a given goal.</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="experiences">
+					<li class="experience toggle toggled">
+						<h3>Essential Skills</h3><div class="arrow">▼</div>
+						<ul class="skills">
+							<li class="skill">Game design and development skills (fuelled by a strong passion in all things game development and design, such as industry papers and talks).</li>
+							<li class="skill">Able to effectively use profilers or debug without them.</li>
+							<li class="skill">Able to diagnose hardware problems.</li>
+							<li class="skill">QA testing skills (related to video game development).</li>
+							<li class="skill">Design theory; through game design, mechanical design, audio design, web design and narrative design.</li>
+							<li class="skill">Programming with strong coding practices and a focus on writing efficient, reusable code.</li>
+							<li class="skill">Motivated by working with a highly skilled team.</li>
+							<li class="skill">Able to work effectively with pre-existing code bases, write new code from scratch, and to integrate new code with what is existing.
+							<li class="skill">Strong consideration of technical restrictions and a willingness to bend applications to work on any desired platform. I’m a fan of application scaling and optimisation for multi-platform gaming.</li>
+							<li class="skill">Adherence to SOLID principles where appropriate</li>
+							<li class="skill">Clear communication style with the ability to explain complex concepts in a way that is easy to understand</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<section id="portfolio">
+			<ul class="projects">
+				<li class="project">
+					<img class="cover" src="/resources/images/headers/midnightPass.png" alt="">
+					<div class="description">
+						<h3>Midnight Pass</h3>
+						<h4>An episodic, online, pixel art mobile project about street racing culture.</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://unity.com/"><img src="/resources/images/icons/mini/unity.png"></a>
+							<a target="_blank" href="https://docs.microsoft.com/en-us/dotnet/csharp/"><img src="/resources/images/icons/mini/cs.png"></a>
+							<a target="_blank" href="https://nodejs.org/en/"><img src="/resources/images/icons/mini/nodejs.png"></a>
+							<a target="_blank" href="https://www.javascript.com/"><img src="/resources/images/icons/mini/js.png"></a>
+							<a target="_blank" href="https://firebase.google.com/"><img src="/resources/images/icons/mini/firebase.png"></a>
+						</div>
+						<p>I've always been a fan of the <a target="_blank" href="https://wanganmaxi-official.com/wanganmaxi5/en/">'Wangan Midnight'</a> franchise, I also played drag racing games on mobile previously and found them lacking in some area or another (not bad, just lacking). This, and my 'nuts-and-bolts' approach, inspired the development of Midnight Pass. While my previous style of development has been useful for the exploration of skills, it is not a directional approach. The ‘street racer' genre of games is something that I have enjoyed before and look to add to with Midnight Pass.</p>
+						<p>On the design side, I found the feeling of driving my own car (with a manual transmission) highly enticing as, famously, there is a directly connected interface with the mechanics of the car and ‘the feel’ of the driving. However, there is still a need for accessibility. As well as this, while I'm part of a crossover, a sizeable audience of gamers are not car enthusiasts, and so 'engaging' has several definitions. Managing and appealing to these different definitions means, to me, creating an experience that translates the authentic experience into an authentic feeling, allowing for authentic engagement. To me, this is the key to 'fun'. It was crucial that the game captures these aspects where many other games of this nature fail (in my opinion).</p>
+						<p>Technically speaking, the game’s update model will use a custom CDN using <a target="_blank" href="https://firebase.google.com/">Firebase</a> and Unity's Asset Bundle system and Firebase’s file hosting. Multiplayer, due to a ‘limitation’ of Firebase being that it is ‘non-real-time’ multiplayer, will be a <a target="blank" href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST API</a> using Firebase’s Realtime Database, Firestore, Cloud Functions and Storage features. For example, multiplayer replays will be serialised via a <a target="_blank" href="https://en.wikipedia.org/wiki/Command_pattern#:~:text=In%20object%2Doriented%20programming%2C%20the,event%20at%20a%20later%20time.&text=Four%20terms%20always%20associated%20with,%2C%20receiver%2C%20invoker%20and%20client.">command pattern</a> and played back on opponent devices. This allows for a decoupling between the logic of the game and the input of the game. As mentioned, there is a directional approach to development, so various elements of development will be as platform-agnostic as possible, utilising the .NET framework and C# where possible, mostly using Unity for rendering, while still writing neat, segmented, separate components for object composition. As an aside, I'm also looking into testing functionality of these platforms, as I've noticed <a target="_blank" href="https://en.wikipedia.org/wiki/Test-driven_development">test driven design</a> as a trend in the industry recently. Lastly, knowing a bit about real-time ray tracing, I'm interested in, if just for the novelty, looking to create a relatively interesting rendering experience.</p>
+						<p>While there's currently no live version on Midnight Pass, I have a Notion board that I use for daily development, it contains active tasks and notes I have on the process. Or, alternatively, reach out to me in private as I'm more than happy to answer any questions or just discuss it more.</p>
+						<a class="button" target="blank" href="https://www.notion.so/chriswebby/22d7d52427df4732ac59b35d33117ff3?v=f70e2430d176473fbf264b663903e2b4">Check out the Notion Board</a>
+					</div>
+				</li>
+				<li class="project">
+					<img class="cover" src="/resources/images/headers/neonPong.png" alt="">
+					<div class="description">
+						<h3>Neon Pong</h3>
+						<h4>Neons and Pong, what could go wrong?</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://unity.com/"><img src="/resources/images/icons/mini/unity.png"></a>
+							<a target="_blank" href="https://docs.microsoft.com/en-us/dotnet/csharp/"><img src="/resources/images/icons/mini/cs.png"></a>
+						</div>
+						<p>During the development of another project, I made the decision to port its progression to Unity. While becoming familiar with Unity, this happened.</p>
+						<p>I thought about how a game developer's first exploration of an engine is often a basic and simplistic remake of some sort - I figured Pong was a good idea. However, I didn't want to replicate the known and loved Pong as it is, so I chose a neon aesthetic, partly to test my own post-processing programming.</p>
+						<p>While becoming familiar with Unity, I learned how the rendering system within it worked, and took the opportunity to implement my own custom version of <a target="_blank" href="https://docs.unity3d.com/Packages/com.unity.postprocessing@3.1/manual/index.html">Unity's Post-Processing stack</a> to see if I could. This became vital as the neon aesthetics' bloom and noise needed constant tweaking as it is reactive to gameplay - which is something that I believe is easier to do with my own implementation of post-processing over Unity's.</p>
+						<p>That left design. I liked the idea of a game of Pong that constantly changed the aim and objective frantically and possibly even comically, so I decided to make it. To me, phone games can be a goldmine (by way of the whole 'limitations give way to innovations' thing), Neon Pong is a draft at such attempts. My <a target="_blank" href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">'Hello World'</a> on the matter, if you will.</p>
+						<p>This was released on the Google Play Store (sorry Apple folks, I don't own anything Apple) if you want to give it a try. Pure, ad-free, in-game transaction-less Pong. I will mention that this was made in a day to familiarise myself with the Unity Editor. With time, I will go back to polish it, but as is, it is a rough prototype made to show that I can use Unity.</p>
+						<a class="button" target="_blank" href="https://play.google.com/store/apps/details?id=com.ChrisWebb.NeonPong&hl=en_CA&gl=US">Go to Google Play</a>
+					</div>
+				</li>
+				<li class="project">
+					<img class="cover" src="/resources/images/headers/marchmallow.png" alt="">
+					<div class="description">
+						<h3>Project Marchmallow</h3>
+						<h4>A barebones WebGL raymarching kit capable of some crazy looks.</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://www.khronos.org/webgl/"><img src="/resources/images/icons/mini/webgl.png"></a>
+							<a target="_blank" href="https://www.javascript.com/"><img src="/resources/images/icons/mini/js.png"></a>
+						</div>
+						<p>Project Marchmallow is a cutely named project undertaken for this site specifically but flourished into a mini renderer for WebGL.</p>
+						<p>I wrote it for this site after finding my original implementation lacking and found alternatives like THREE.js to be, in my opinion, too 'bloated' for my usecase.</p>
+						<p>Specifically, I found that I wanted basic rendering capabilities without the need to control the madness that is the OpenGL state-machine manually, setting state line by line.</p>
+						<p>Basically, with an API between THREE.js and Unity, but specialised for ray marching, Marchmallow allows for HLSL-ish GLSL with the likes of an '#include' system, allowing for the use of reusable libraries.</p>
+						<p>It also has a built in post processing stack to get the best out of what it can do.</p>
+						<p>It takes cues from modern rendering practices where it can (when WebGL v1 allows) and wraps them in ES6 style Javascript objects (classes).</p>
+						<p>The repo is on Github for browsing, feel free to use it. Just be aware that it is for *ray marching* and as such, needs a bit of work to draw meshes as a rasteriser.</p>
+						<p>This was a passion project that served a massive amount of education on how modern path tracing works.</p>
+						<a class="button" target="_blank" href="https://github.com/cwebby/projectmarchmallow">Check out the source code</a>
+					</div>
+				</li>
+				<li class="project">
+					<img class="cover" src="/resources/images/headers/anythingAir.png" alt="">
+					<div class="description">
+						<h3>Anything Air</h3>
+						<h4>A website made for a local business and my first implementation of WebGL.</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://www.khronos.org/webgl/"><img src="/resources/images/icons/mini/webgl.png"></a>
+							<a target="_blank" href="https://en.wikipedia.org/wiki/HTML5"><img src="/resources/images/icons/mini/html.png"></a>
+							<a target="_blank" href="https://www.javascript.com/"><img src="/resources/images/icons/mini/js.png"></a>
+						</div>
+						<p>When an inspiration of mine mentioned that WebGL in combination with JavaScript could 'do powerful things' showing off something I thought to be truly ground-breaking, I felt like I needed to look into it. I built a website from the ground up and continually tore it back down as I taught myself web design practices and decided to add my own flair in the form of a new skill. At this point, I had become familiar with OpenGL and DirectX3D, being fluent in both. The only area I had no experience was web rendering (the WebGL version of OpenGL).</p>
+						<p>With this, I decided to implement my own rendering system in JavaScript using the HTML WebGL standard. It was a huge learning experience as my prior experience with rendering was in game engines where rendering logic was already set up in event systems, whereas a webpage has none. After completion, I took the site and showed it to the owner of the business, and they liked it to the point where they decided to explore hosting.</p>
+						<p>NOTE: I do still have the permission from the business owner to show my work but the owner no longer wishes to advertise the business. I have hosted it locally to this domain just to show my first journey into WebGL</p>
+						<a class="button" target="_blank" href="/resources/sites/anythingair/index.html">Go to the Site</a>
+					</div>
+				</li>
+				<li class="project">
+					<img class="cover" src="/resources/images/headers/realEstaite.png" alt="">
+					<div class="description">
+						<h3>Real Est{ai}te</h3>
+						<h4>A major project involving NodeJS, SQL, 3-tiered architecture and a recommender style AI.</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://nodejs.org/en/"><img src="/resources/images/icons/mini/nodejs.png"></a>
+							<a target="_blank" href="https://en.wikipedia.org/wiki/HTML5"><img src="/resources/images/icons/mini/html.png"></a>
+							<a target="_blank" href="https://pugjs.org/api/getting-started.html"><img src="/resources/images/icons/mini/pug.png"></a>
+							<a target="_blank" href="https://firebase.google.com/"><img src="/resources/images/icons/mini/firebase.png"></a>
+							<a target="_blank" href="https://www.javascript.com/"><img src="/resources/images/icons/mini/js.png"></a>
+						</div>
+						<p>At the end of my Master's degree, I needed to work in a group to create a product. With myself being the only 'full on' developer, the engineering of the creation was at my discretion in terms of implementation.</p>
+						<p>I elected to use the <a target="_blank" href="https://en.wikipedia.org/wiki/Multitier_architecture">3-layer N-Tier architecture system</a> to contain an SQL database and use NodeJS as a middle layer, with the rendered HTML (rendered via NodeJS's PugJS) being the presentation layer. I was asked what I wanted to take on, with AI being my answer. My group and I planned to replicate a real estate website that used AI to advise in the place of an agent, based off of user data and browsing habits.</p>
+						<p>The way this worked was to note user behaviour, store it in SQL as keywords related to a user, then, when browsing, using a <a target="_blank" href="https://en.wikipedia.org/wiki/Recommender_system">'Netflix-style' recommender system</a>, wherein the behaviours were compared to the behaviours of other, more active, users in an effort to find suggestions that the user might not have found otherwise. Technically speaking, the 'AI' was nothing more than a dot product comparison of behaviours and with me already being familiar with the idea of a dot product comparison through my experimentation in rendering and games, the recommender was somewhat trivial to implement.</p>
+						<p>While this project is not directly related to game development, I was required, as per the course material, to write a review of the existing literature on AI in a specific area (being video games). With 'AI' being state machines in games for decades, the advancements in AI have been dramatic in the industry and are mostly recent, meaning I wasn't reading papers from the 90s, instead, about studies and experiments with reinforcement, generative adversarial and deep learning intelligence.</p>
+						<p>If you're a game developer and are looking to see how AI can either aid you with development or the functionality of a finished game, feel free to give it a read.</p>
+						<a class="button" target="_blank" href="/resources/documents/Role of AI in Modern Game Development, A Lit Review by Chris Webb.pdf">Read the literature review</a>
+					</div>
+				</li>
+				<li class="project">
+					<img class="cover" src="/resources/images/headers/hawc.png" alt="">
+					<div class="description">
+						<h3>HAWC</h3>
+						<h4>An online home automation system using NodeJS and Raspberry Pis.</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://www.raspberrypi.org/"><img src="/resources/images/icons/mini/rpi.png"></a>
+							<a target="_blank" href="https://en.wikipedia.org/wiki/HTML5"><img src="/resources/images/icons/mini/html.png"></a>
+							<a target="_blank" href="https://www.arduino.cc/"><img src="/resources/images/icons/mini/arduino.png"></a>
+							<a target="_blank" href="https://nodejs.org/en/"><img src="/resources/images/icons/mini/nodejs.png"></a>
+							<a target="_blank" href="https://www.javascript.com/"><img src="/resources/images/icons/mini/js.png"></a>
+							<a target="_blank" href="https://www.cplusplus.com/"><img src="/resources/images/icons/mini/cpp.png"></a>
+						</div>
+						<p>HAWC or "Home Automation Wireless Control" was a student major project that I was a part of for my Bachelor degree in 2017.</p>
+						<p>Much like other home automation systems, HAWC relies on client/server models in conjunction with relay technologies to power appliances.</p>
+						<p>Specifically, a server running NodeJS communicates with the outside connections and triggers scripts on specified wireless relays. The full set of features allowed for users to securely log in and control their home from anywhere, while also allowing for timers and third-party plugins.</p>
+						<p>My role was as one of two programmers involved, focusing more on the electrical engineering side of the project, while the other programmer initially created the server system's scripting. By the end however, we were both very adept with the full scope of the work.</p>
+						<p>I do not own the full and finished code, nor do I take full credit for all the code, but it is available to look at on my Github repository for it, if you were curious.</p>
+						<a class="button" target="_blank" href="https://github.com/cwebby/HAWC2017">Check out the repo</a>
+					</div>
+				</li>
+				<li class="project">
+					<img class="cover" src="/resources/images/headers/misc.png" alt="">
+					<div class="description">
+						<h3>Some earlier, primitive or experimental projects</h3>
+						<h4>Inheritance</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://unity.com/"><img src="/resources/images/icons/mini/unity.png"></a>
+							<a target="_blank" href="https://docs.microsoft.com/en-us/dotnet/csharp/"><img src="/resources/images/icons/mini/cs.png"></a>
+							<a target="_blank" href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)"><img src="/resources/images/icons/mini/glsl.png"></a>
+						</div>
+						<p>After watching <a target="_blank" href="https://www.imdb.com/title/tt0083658/">Blade Runner</a> and its sequel, playing <a target="_blank" href="https://en.wikipedia.org/wiki/Prey_(2017_video_game)">Prey (2017)</a>, seeing the trailer for the upcoming game <a target="_blank" href="https://www.youtube.com/watch?v=n4IPBiB7SF4">'The Last Night' at the 2017 E3 XBox conference</a>, and being a huge fan of games with interpretive meanings like <a target="_blank" href="https://en.wikipedia.org/wiki/Hotline_Miami">Hotline Miami</a>, I was inspired to make a 2D, side on, sprite-based, narratively driven game where your choices matter. I was starting a project for my final project at university and started from scratch in GameMaker Studio to build a game that was better mechanically, technically and narratively.</p>
+						<p>Afterwards, given that GameMaker Studio's mostly a 2D engine, I moved to Unity and used it as a springboard for learning 3D lighting, physics and volumetric rendering. Does Unity do this 'out of the box', yes, but I learned it on my own as well, developing the rendering and VFX from the ground up using OpenGL for a stunning visual experience. Inheritance is for me, a learning experience project, not a production one, as such, there is no tangible release date. But be assured that anything cool that I do probably came from this.</p>
+						<h4>Ardash.io</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://www.arduino.cc/"><img src="/resources/images/icons/mini/arduino.png"></a>
+							<a target="_blank" href="https://www.cplusplus.com/"><img src="/resources/images/icons/mini/cpp.png"></a>
+						</div>
+						<p>When I started to learn C-based languages, I was introduced to the <a target="_blank" href="https://www.arduino.cc/">Arduino</a> brand by my father. It was the first time I was aware of programmable circuit boards and the large scope of their applications. At about this time, the clock in my <a target="_blank" href="https://en.wikipedia.org/wiki/Mitsubishi_Mirage#1995">1990's Mitsubishi Lancer</a> started to fault. It sparked an idea.</p>
+						<p>I decided to learn a bit of C++ on my own (at the time, I barely knew C#) and combine my skills in electrical engineering with those of programming to create a novelty application that, given the electrical components, added more functionality to a simple clock module. It wasn't much, but as an avid car enthusiast, it was one more step to making my car more unique and to my own taste.</p>
+						<h4>Cof</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://en.wikipedia.org/wiki/HTML5"><img src="/resources/images/icons/mini/html.png"></a>
+							<a target="_blank" href="https://www.javascript.com/"><img src="/resources/images/icons/mini/js.png"></a>
+						</div>
+						<p>For those who did tertiary education, there would have been plenty of those assignments that one 'just didn't want to do'. This was one of them for me. I decided to jokingly jest at the pretentiousness associated with some of the stereotypes of coffee drinkers including the 'culture' of higher grandeur surrounding falsely premium consumer products.</p>
+						<p>While I didn't feel it worthy of being in my portfolio, I felt it was noteworthy as it is the first occasion where <a target="_blank" href="https://html.spec.whatwg.org/">proper and modern design</a> was in my head from the moment creation started. Clear and elegant design needed to be evident in the visual aspect of the site as well as overall readability.</p>
+						<h4>Just Text Me</h4>
+						<div class="thumbs">
+							<a target="_blank" href="https://www.yoyogames.com/en/gamemaker"><img src="/resources/images/icons/mini/gms.png"></a>
+						</div>
+						<p>One of my first attempts at game design, Just Text Me was a game on mobile that would emulate the Android messaging app and would give you contextual responses to people talking to you which would drive narrative in a 'choose your own adventure' way.</p>
+						<p>I was inspired by <a target="_blank" href="https://en.wikipedia.org/wiki/Emily_Is_Away">"Emily Is Away"</a> and ultimately decided to shelf the project when Telltale games published the <a target="_blank" href="https://en.wikipedia.org/wiki/Mr._Robot#In_other_media">"Mr Robot"</a> mobile game which applied a similar concept to mobile but within the context of the Sam Esmail's television show of the same name, with my reason being that 'I appreciate that I cannot do better than this' at the time... the titular game was really well made.</p>
+					</div>
+				</li>
+			</ul>
+		</section>
+		<section id="contact" class="contact">
+			<div class="thumbs">
+				<h3 class="heading">Social Media</h3>
+				<a target	="_blank" href="https://github.com/cwebby"><img src="resources/images/icons/buttons/github.png"></a>
+				<a target="_blank" href="https://twitter.com/_cwebby"><img src="resources/images/icons/buttons/twitter.png"></a>
+				<a target="_blank" href="https://www.instagram.com/_cwebby/?hl=en"><img src="resources/images/icons/buttons/instagram.png"></a>					
+				<a target="_blank" href="http://thewannabegamedevblog.blogspot.com/"><img src="resources/images/icons/buttons/blogger.png"></a>
+				<a target="_blank" href="https://www.linkedin.com/in/christopherwebby/"><img src="resources/images/icons/buttons/linkedin.png"></a>
+				<a target="_blank" href="https://www.youtube.com/channel/UCYtws4LBXnioCgbFb8TUKQg?view_as=subscriber"><img src="resources/images/icons/buttons/youtube.png"></a>
+			</div>
+			<form id="contactForm" method="post" action="https://us-central1-christopherwebbportfoliosite.cloudfunctions.net/sendMail">
+				<h3>Get in touch</h3>
+				<label for="name">Full Name</label>
+				<input type="text" name="name" required>
+				<label for="text">Email Address</label>
+				<input type="text" name="mail" required>
+				<label for="message">Message</label>
+				<textarea name="message"></textarea required>
+				<a class="onlyScript button" id="contactButton">Send</a>
+				<h3 class="noScript">To use this form, allow the use of Javascript.</h3>
+			</form>
+		</section>
+		<footer class="subsection">This site was made with VS Code, for Chrome, tested on Windows and Android and hosted with Firebase. &#9829;</footer>
+		<script nomodule>alert("Hi, while your browser seems JavaScript compatible, it isn't as supported as needed, please run this page in a more allowing browser, in the meantime, this will run as if it isn't supported at all. -CW");</script>
+	</body>	
+</html>

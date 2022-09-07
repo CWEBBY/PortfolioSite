@@ -1,0 +1,454 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 1rem;
+	font-family: 'Helvetica', sans-serif;
+}
+
+#main {
+	display: grid;
+	grid-template-rows: 30rem repeat(4, auto);
+}
+
+.mainHeaderText {
+	text-align: left; 
+	margin-left: 15%; 
+	font-weight: bolder;
+	text-shadow: -1px -1px #fff, 
+	1px -1px #fff, 
+	-1px 1px #fff, 
+	1px 1px #fff;
+}
+
+.MenuUL {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.MenuLI {
+  float: left;
+  font-size: 19px;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+.SideLink {
+	display: block;
+}
+
+.NavBarLink {
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 12px 10px;
+	text-decoration: none;
+	background-color: #333;
+}
+
+.NavBarTop {
+	float: right;
+	position: fixed;
+	top: 0px;
+	right:0px;
+}
+
+.MenuBar {
+	display: none;
+}
+
+.MenuList {
+	display: block;
+}
+
+.MenuLI a:hover {
+  background-color: #111;
+  border-top: -5px solid white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.TopLink :hover{
+	border-top: -5px solid white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.SideLink:hover {
+	border-top: -5px solid white;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+#NavigationBarLogoWebGL {
+	display:none;
+}
+
+#NavigationBar {
+	z-index:1;
+	background-color: #333;
+	height: 96px;
+	position: sticky;
+	top: -48px;
+}
+
+#NavigationBarLogoImage {
+	display: none;
+}
+
+#Burger {
+	display: none;
+}
+
+#CallButton{
+	display: none;
+}
+
+.contentBlock {
+	display: grid;
+	text-align: center;
+	margin: none;
+}
+
+.cbLeft {
+	clear: both;
+	width: 50%;
+	float: left;
+	display: inline-block;
+	background-color: blue;
+}
+
+.cbRight {
+	width: 50%;
+	float: right;
+	display: inline-block;
+	background-color: green;
+}
+
+#Residential1 {
+	background-color: #EEF2EB;
+}
+
+#BannerSection {
+	background-image: url('../Images+Videos/AABanner2.jpg');
+  	background-position: center;
+  	background-color: #EEF2EB;
+  	display: block;
+  	padding-top: 1%;
+	padding-left: 2%;
+	padding-right: 2%;
+	padding-bottom: 1%;
+}
+
+#About {
+	padding: 3% 8%;
+}
+
+.resComm {
+	background-image: url('../Images+Videos/units.jpg');
+  	background-position: top;
+  	background-size: cover;
+  	padding-top: 5%;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-bottom: 5%;
+}
+
+.contentBlockText {
+	margin: 5% 7% 5% 7%;
+	position: relative;
+	background: rgba(34, 30, 128, 0.85);
+	padding: 4%;
+	border-radius: 12px;
+	box-shadow: 4px 4px 20px 0px rgba(3, 155, 234, 0.6);
+	color: #fff;
+}
+
+#Services {
+	background-color: #039bea;
+	background-image: url('../Images+Videos/Anything_Air_Sky.jpg');
+	background-position: bottom;
+	background-size: cover;
+	color: #221e80;
+	padding-top: 3%;
+}
+
+.servicesText {
+	text-align: center;
+	margin: 1.5% 10%;
+}
+
+.slideshow-container {
+	background: rgba(255, 255, 255, 0.4);
+	margin: 1% 10% 5% 10%;
+	border-radius: 12px 12px;
+	padding: 3%;
+}
+
+.services {
+	display: none;
+	text-align: center;
+	margin-bottom: 3%;
+}
+
+.prev, .next {
+	cursor: pointer;
+	position: absolute;
+	width: auto;
+	padding: 16px;
+	color: #888;
+	font-weight: bold;
+	font-size: 20px;
+	border-radius: 5px;
+	user-select: none;
+	margin-top: -10px;
+}
+
+.next {
+	position: absolute;
+	right: 13%;
+}
+
+.prev:hover, .next:hover {
+	background-color: rgba(34, 30, 128, 0.8);
+	color: white;
+}
+
+.dot-container {
+	text-align: center;
+	padding: 0% 2%;
+}
+
+.dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+	margin-top: 2%;
+}
+
+.active, .dot:hover {
+	background-color: #717171;
+}
+
+.slideTextH {
+	font-size: 1.5rem;
+	margin-top: 0;
+	font-weight: 600;
+}
+
+.slideTextP {
+	font-size: 1rem;
+	margin-top: 1%;
+}
+
+#Contact {
+	background-color: #333;
+	color: #fff;
+}
+
+label {
+	display: block;
+	margin-bottom: 1%;
+	font-size: 1.1rem;
+}
+
+input {
+	padding: 1%;
+	border-radius: 3px;
+	color: #333;
+	box-shadow: 0 1rem 2rem 0 rgba(0,0,0,0.2);
+	margin-bottom: 7%;
+	width: 90%;
+	font-size: 1rem;
+}
+
+textarea {
+	padding: 1%;
+	border-radius: 3px;
+	color: #333;
+	box-shadow: 0 1rem 2rem 0 rgba(0,0,0,0.2);
+	display: block;
+	margin-bottom: 5%;	
+	width: 90%;
+	height: 5rem;
+}
+
+input.button {
+	padding: 3%;
+	display: inline;
+	float: right;
+	margin-right: 8%;
+	color: #fff;
+}
+
+@media screen and (min-width: 740px) {
+	.twoCol {
+		display: grid; 
+		grid-template-columns: repeat(2, 50%);
+	}
+
+	.left {
+		margin: 12% 15%;
+		text-align: left;
+		border-right: 1px solid #fff;
+	}
+
+	.right {
+		margin: 12% 8%;
+		text-align: left;
+	}
+
+	input {
+		margin-bottom: 3%;
+	}
+
+	textarea {
+	padding: 1%;
+	border-radius: 3px;
+	color: #333;
+	box-shadow: 0 1rem 2rem 0 rgba(0,0,0,0.2);
+	display: block;
+	margin-bottom: 3%;	
+	width: 90%;
+	height: 4rem;
+	}
+
+	input.button {
+	padding: 2%;
+	display: inline;
+	float: right;
+	margin-right: 8%;
+	color: #fff;
+	}
+
+	#copy {
+	text-align: left;
+	font-size: 0.8rem;
+	padding-bottom: 1%;
+	padding-left: 3%;
+	background-color: #333;
+	color: #fff;
+	margin-top: -3%;
+	}
+}
+
+@media screen and (max-width: 920px) {
+	#NavigationMenu {
+		display: none;
+	}
+
+	.NavigationBarLogo {
+		margin-left: auto;
+		margin-right: auto;
+		width: 100%;
+		height: 100%;
+	}
+
+	.NavBarTop {
+		width: 100%;
+		position: sticky;
+		top:-100%;
+	}
+
+	.MenuUL {
+	  list-style-type: none;
+	  overflow: visible;
+	}
+
+	.MenuLI {
+	  float: none;
+	}
+
+
+	.MenuLI a:hover {
+	  background-color: #111;
+	  border-top: 0px solid white;
+	  border-top-left-radius: 0px;
+	  border-top-right-radius: 0px;
+	}
+
+	.NavBarLink {
+		display: inline-block;
+		color: white;
+		text-align: center;
+		padding: 12px 10px;
+		text-decoration: none;
+		margin:0;
+		width: 100%;
+		background-color: #222;
+	}
+
+	.SideLink {
+		display: none;
+	}
+
+	#Burger {
+		display: block;
+	}
+
+	#NavigationBar {
+		z-index:1;
+		background-color: #333;
+		height: 100%;
+		position: relative;
+		margin:0;
+		top: 0;
+	}
+
+	#CallButton{
+		display: block;
+	}
+
+	.CallButton{
+		position:fixed;
+		width:75px;
+		height:75px;
+		bottom:20px;
+		right:20px;
+		background-color:#13138e;
+		color:transparent;
+		text-shadow:0 0 0 #007bef;
+		border-radius:75px;
+		text-align:center;
+		line-height: 75px;
+		box-shadow: 2px 2px 3px #333;
+		font-size: 40px;
+		text-decoration: none;
+	}
+
+	.twoCol {
+		display: grid; 
+		grid-template-rows: 2;
+	}
+
+	.left {
+		margin: 5% 5% 0% 5%;
+		padding: 10% 10% 15% 10%;
+		text-align: left;
+	}
+
+	.right {
+		margin: 0% 5% 8% 5%;
+		padding: 10% 10% 15% 10%;
+		text-align: left;
+	}
+
+	#copy {
+	text-align: center;
+	font-size: 0.8rem;
+	padding-bottom: 1%;
+	background-color: #333;
+	color: #fff;
+	margin-top: -3%;
+	}
+}

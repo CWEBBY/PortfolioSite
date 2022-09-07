@@ -1,0 +1,373 @@
+/* You'll have as much fun reading this as I did writing it... */
+/* GLOBAL */
+html{ scroll-behavior: smooth; }
+h1 { font-size: 3rem; }
+header { display: table; } 
+li { list-style-type: square; }
+.menu { display: none; }
+.arrow { display: none; }
+.onlyScript { display: none; }
+.noScript { display: block; }
+header, section, footer {
+	max-width: 1920px;
+	margin: auto;
+}
+footer {
+	text-align: center;
+	background-color: #484848;
+}
+h2 { 
+	height: 1.5rem; 
+	font-size: 1.5rem; 
+	font-style: italic;	
+}
+h1, h2 {
+	font-weight: lighter;
+	color: #ffffff;
+	padding: 0 1rem;
+	margin: auto;
+	border-left: 1.5vw solid #484848;
+}
+nav {
+	z-index:  99;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3.25rem;
+	width: 100%;
+}
+body {
+	background-color: #0f0f0f;
+	margin: 0;
+	padding: 0;
+	color: #bbbbbb;
+	min-width: 280px;
+    overflow-x: hidden;
+	width: 100%;
+    height: 100%;
+	font-family: 'Abel', Verdana, Tahoma;
+}
+/* GLOBAL */
+/* INTERACTON */
+nav, header { user-select: none; }
+a {
+	text-decoration: none;
+	color: inherit;	
+	transition: .125s;
+} 
+a:hover {
+	transition: .125s;
+	color: #ffffff;
+    text-shadow: 0rem 0rem 1rem #ffffff;
+}
+.button:hover {
+	transition: .125s;
+	box-shadow: 0rem 0rem 1rem #ffffff;
+}
+a:hover, .button:hover { cursor: pointer; }
+/* INTERACTON */
+/* THEMES */
+header, section { background-color: #1d1d1d; }
+section, footer { border-top: .125rem solid #b90029; }
+/* THEMES */
+/* INPUT */
+textarea { height: 10rem; }
+input, textarea { width: 100%; }
+.button, textarea, input { background-color: #484848; }
+.button {
+	margin: 1.5rem auto;
+	transition: .125s;
+	line-height: 3rem;
+	width: 18rem;
+	display: block;
+	text-align: center;
+	background-color: #b90029;
+}
+.button, textarea, input { 
+	font-family: inherit; 
+	border: none;
+	border-radius: .25rem;
+    color: #dddddd;
+	resize: none;
+	min-height: 2rem;
+}
+/* INPUT */
+/* LAYOUT */
+.bio, .experience, .contact { display: grid; }
+.bio .button { margin-left: 0; }
+.bio, .contact { grid-template-columns: 30% 70%; }
+.experience { grid-template-columns: 25% 75%; }
+.projects > .project:nth-child(odd) { grid-template-columns: 70% 30%; }
+.projects > .project:nth-child(even) { grid-template-columns: 30% 70%; }
+/* LAYOUT */
+/* SPECIFICS */
+/* SPECIFICS - Home */
+#navigationForeground > div { float: right; }
+#navigationForeground {
+	max-width: 1920px;
+	margin: auto;
+}
+#navigationForeground  a:hover {
+	border-top: .25rem solid #ffffff;
+    padding-top: .75rem;
+}
+#navigationForeground  a {
+	font-size: 1.125rem;
+	padding: 1rem;
+	display: inline-block;
+}
+#navigationBackground, #navigationForeground {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+#navigationBackground {
+	background-color: #484848;
+	border-bottom: .25rem solid #b90029;
+}
+#navigationForeground {
+	left: 0;	
+	right: 0;
+}
+
+header {
+	max-width: 1920px;
+	max-height: 1080px;
+	width: 100%;
+	position: relative;
+	height: 100vh;
+	margin: auto;
+}
+header > .nametag, header > .nametag * {
+	pointer-events: none;
+}
+
+header > .nametag {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	top: 0;
+	height: fit-content;
+	cursor: grab;
+	margin: auto;
+	user-select: none;
+}
+
+#headerGL {
+	opacity: 0;
+	position: absolute;
+	background-image: url('../resources/images/loader.gif');
+	background-color: #0f0f0f;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	cursor: grab;
+}
+
+.dock {
+	position: absolute;
+	margin: auto;
+	width: fit-content;
+	height: fit-content;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align: center;
+	background-color: #1d1d1d;
+	border-radius: 1rem 1rem 0 0;
+}
+
+.showcase {
+	height: stretch;
+	display: inline-block;
+	background-color: #b90029;
+	border-radius: 1rem 1rem 0 0;
+}
+
+.radio {
+	display: inline-block;
+	width: .75rem;
+	border-radius: 50%;
+	height: .75rem;
+	margin: .5rem;
+	margin-top: .75rem;
+	cursor: pointer;
+	background-color: #0f0f0f;
+	border: .125rem solid #484848;
+}
+.radio:hover {
+	background-color: #1d1d1d;
+	transition: .125s;
+	box-shadow: 0rem 0rem 1rem #ffffff;
+	cursor: pointer;
+}
+.showcase .radio {
+	background-color: #3f0003;
+	border: .125rem solid #ff2020;
+}
+.radio.active { background-color: #bbbbbb; }
+.radio.special.active { background-color: #bbbbbb; }
+/* SPECIFICS - About */
+.experiences { padding: 3rem 0; }
+.contact h3 { text-align: center; }
+.experiences, .skills { margin: 0; } 
+.bio > .description { padding: 3rem; }	
+.qualifications > li { padding: .5rem; }
+.details, .bio {
+	border-top: .0625rem solid #484848;
+	border-bottom: .0625rem solid #484848;
+}
+.details > h3 { 
+	text-align: center;
+	margin-top: 3rem;
+}
+.experience > h3 {
+	text-align: right;
+	margin: auto 3rem;
+}
+.skills {
+	padding: 1.5rem 3rem;
+	border-left: .125rem solid #484848; 
+}
+.mugshot {
+	border-radius: 5rem 0 0 5rem;
+	object-fit: cover;
+    width: 100%;
+    height: 100%;
+    padding: 10%;
+    margin: auto;
+    box-sizing: border-box;
+} 
+/* SPECIFICS - Portfolio */
+.project > .description h3, 
+.project > .description h4 { text-align: center; }
+.project > .description { padding: 5%; }
+.project > .description .thumbs { text-align: center; }
+.projects > .project:nth-child(odd) .cover, 
+.projects > .project:nth-child(even) .description { order: 1; }
+.projects > .project:nth-child(even) .cover, 
+.projects > .project:nth-child(odd) .description { order: 0; }
+.projects {
+	padding: 0;
+	margin: 0;
+}
+.project > .description .thumbs img {
+	display: inline-block;
+	margin: auto;
+	height: 1.5rem;
+}
+.projects > .project .cover { 
+	object-fit: cover;
+	max-width: 80%;
+	min-height: 80%;
+	margin: auto; 
+}
+.project {
+	display: grid;
+	border-top: .0625rem solid #484848;
+	border-bottom: .0625rem solid #484848;
+}
+.projects > .project:nth-child(odd) .cover { 
+    object-position: right;
+	border-radius: 0 2.5rem 2.5rem 0rem;
+	border-left: .125rem solid #484848;
+	padding: 1.5rem 1.5rem 1.5rem 0;
+}
+.projects > .project:nth-child(even) .cover { 
+    object-position: left;
+	border-radius: 2.5rem 0 0 2.5rem;
+	border-right: .125rem solid #484848;
+	padding: 1.5rem 0 1.5rem 1.5rem;
+}	
+/* SPECIFICS - Contact */
+.contact > .thumbs {
+	text-align: center;
+    margin: auto;
+	border-right: .125rem solid #484848;
+}
+.contact > .thumbs img {
+	width: 10rem;
+    margin: 1rem;
+}
+.contact > form {
+    display: block;
+	margin: auto;
+	padding: 20% 10%;
+    width: 75%;
+}
+/* SPECIFICS */
+@media screen and (max-width: 720px) and (max-aspect-ratio: 1/1), screen and (max-width: 720px)  {
+    /* GLOBAL */
+    .button { width: 80%; }
+    /* GLOBAL */
+    /* SPECIFICS */
+    /* SPECIFICS - Navigation */
+    nav * { text-align: center; }
+    #navigationForeground > div { float: none; }
+    #navigationForeground  a { background-color: #484848; }
+    .menu, #navigationForeground.toggle.toggled a { display: block; }
+    #navigationBackground, #navigationForeground  a { display: none; }
+    #navigationForeground {
+	    height: 100%;
+	    background-color: #484848;
+	    border-bottom: .125rem solid #b90029;
+    }
+    #navigationForeground  a:hover {
+	    border-top: 0 solid #ffffff;
+	    padding-top: 1rem;
+    }
+
+    /* SPECIFICS - About */
+	.bio .button { margin-left:auto; }
+    .details  h3 { margin: 1rem; }
+    .experiences { padding: 0; }
+    .skills .skill { display: none; }
+    .skills { border: 0; padding: 0; }
+    .experience > h3 { text-align: left; }
+    .bio .description { padding: 2.5% 5%; }
+    .project > .description { padding: 2.5% 5%; }
+    .bio, .bio .button, .experience { display: block; }
+    .experience { border-top: .0625rem solid #484848; }
+    .experience.toggle.toggled .arrow { transform: scaleY(-1); }
+    .mugshot {
+        padding: 0;
+        border-radius: 0;
+    }
+    .experience.toggle.toggled .skill { 
+        display: list-item; 
+        margin: 5% 10%; 
+    }
+	.arrow {
+		display: inline;
+		margin-top: -2.5rem;
+		right: 5%;
+		position: absolute;
+	}
+    /* SPECIFICS - Portfolio */
+    .project {
+	    display: block;
+	    margin: 0;
+    }
+    .projects > .project .cover {
+        object-fit: cover;
+        width: 100%;
+        max-width: 100%;
+        margin: auto;
+    }
+    .projects > .project:nth-child(odd) .cover, .projects > .project:nth-child(even) .cover {
+	    object-position: right;
+        border-radius: 0;
+        border-left: 0 solid #484848;
+        border-right: 0 solid #484848;
+        padding: 0rem;
+        margin: auto;
+    }
+    /* SPECIFICS - Contact */
+    .contact { display: block; }
+    .contact > .thumbs { border: 0; }
+    .contact > form { padding: 5% 2.5%; }
+    .contact > .thumbs img { width: 5rem; }
+    /* SPECIFICS */
+}
