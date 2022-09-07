@@ -98,8 +98,8 @@ input, textarea { width: 100%; }
 .bio .button { margin-left: 0; }
 .bio, .contact { grid-template-columns: 30% 70%; }
 .experience { grid-template-columns: 25% 75%; }
-.projects > .project:nth-child(odd) { grid-template-columns: 70% 30%; }
-.projects > .project:nth-child(even) { grid-template-columns: 30% 70%; }
+.projects > .project:nth-child(even) { grid-template-columns: 70% 30%; }
+.projects > .project:nth-child(odd) { grid-template-columns: 30% 70%; }
 /* LAYOUT */
 /* SPECIFICS */
 /* SPECIFICS - Home */
@@ -246,10 +246,10 @@ header > .nametag {
 .project > .description h4 { text-align: center; }
 .project > .description { padding: 5%; }
 .project > .description .thumbs { text-align: center; }
-.projects > .project:nth-child(odd) .cover, 
-.projects > .project:nth-child(even) .description { order: 1; }
 .projects > .project:nth-child(even) .cover, 
-.projects > .project:nth-child(odd) .description { order: 0; }
+.projects > .project:nth-child(odd) .description { order: 1; }
+.projects > .project:nth-child(odd) .cover, 
+.projects > .project:nth-child(even) .description { order: 0; }
 .projects {
 	padding: 0;
 	margin: 0;
@@ -270,13 +270,13 @@ header > .nametag {
 	border-top: .0625rem solid #484848;
 	border-bottom: .0625rem solid #484848;
 }
-.projects > .project:nth-child(odd) .cover { 
+.projects > .project:nth-child(even) .cover { 
     object-position: right;
 	border-radius: 0 2.5rem 2.5rem 0rem;
 	border-left: .125rem solid #484848;
 	padding: 1.5rem 1.5rem 1.5rem 0;
 }
-.projects > .project:nth-child(even) .cover { 
+.projects > .project:nth-child(odd) .cover { 
     object-position: left;
 	border-radius: 2.5rem 0 0 2.5rem;
 	border-right: .125rem solid #484848;
