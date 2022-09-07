@@ -29,11 +29,11 @@ if (navigationBackground) {
 // Step 3: Initialize the name tag typewriters.
 const title = new Typewriter(document.getElementById("headerTitle"));
 const subtitle = new Typewriter(document.getElementById("headerSubtitle"), [
-    "Software Engineer", "Game Developer", "Game Designer",
-    "Web Developer", "Network Administrator", "Car Enthusiast",
-    "Coffee Drinker", "Night Owl", "PC Builder", "System Designer",
-    "Pizza Expert", "DIY-er", "Visual FX Programmer", "Masters Graduate",
-    "Overclocker", "Modder", "Matrix Multiplier", "Raytracer", "camelCaseUser"
+    "Software Engineer", "Game Developer", "Game Designer", "Git Commiter", 
+    "Web Developer", "Network Administrator", "Car Enthusiast", "Tabs User", 
+    "Coffee Drinker", "Night Owl", "PC Builder", "System Designer", "CWEBBY", 
+    "Pizza Expert", "DIY-er", "Visual FX Programmer", "Masters Graduate", "Code Cowboy",
+    "Overclocker", "Modder", "Matrix Multiplier", "Raytracer", "camelCaseUser", "Grease Monkey"
 ]);
 
 // Step 4: Wait for the init of all of the GL state. See "./helpers/gl.js" for implementation...
