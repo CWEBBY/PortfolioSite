@@ -26,33 +26,43 @@ float LayerOfNoise(vec2 uv)
     vec2 gridCelId = floor(uv);
     vec2 gridCellUV = fract(uv);
     vec4 gridCell;
-    gridCell.x = Rand21(gridCelId + vec2(0., 0.));
-    gridCell.y = Rand21(gridCelId + vec2(1., 0.));
-    gridCell.z = Rand21(gridCelId + vec2(0., 1.));
-    gridCell.w = Rand21(gridCelId + vec2(1., 1.));
+    gridCell.x = SmoothRand21(gridCelId + vec2(0., 0.));
+    gridCell.y = SmoothRand21(gridCelId + vec2(1., 0.));
+    gridCell.z = SmoothRand21(gridCelId + vec2(0., 1.));
+    gridCell.w = SmoothRand21(gridCelId + vec2(1., 1.));
     vec2 tb;
     tb.x = mix(gridCell.x, gridCell.y, gridCellUV.x);
     tb.y = mix(gridCell.z, gridCell.w, gridCellUV.x);
     return smoothstep(.25,.75, mix(tb.x, tb.y, gridCellUV.y));
 }
 
+float LayersOfNoise(vec2 uv, float iterations)
+{
+    float cell = 0.;
+    float count = 0.;
+
+    for (float i = 1.; i < 64.; i++)
+    {
+        cell += SmoothRand21(uv * i) / i;
+        count += 1. / i;
+
+        if (i > iterations) { break; }
+    }
+
+    return cell / count;
+}
+
 void main()
 {
     vec2 fireSpeed = vec2(0., -1.);
-    vec2 uv = (v_Position * .5) + .25;
-    vec2 noiseUV = uv + fireSpeed * (u_Time + 5.); //+5 to skip a bad bit in the time generated noise, there's a pattern at t=0, takes 5 seconds to randomize.
-    vec2 specialFX = vec2(LayerOfNoise(noiseUV * 64.), ((LayerOfNoise(noiseUV * 2.) - .5) * 2.) * .01);
-    noiseUV.x += specialFX.y;
-    float cell = 0.;
-    float count = 0.;
-    for (float i = 1.; i < 32.; i++)
-    {
-        cell += LayerOfNoise(noiseUV * (2. * i)) / i;
-        count += 1. / i;
-    }
-    cell /= count;
-    float flame = smoothstep(.0, .25, cell*1.-uv.y);
-    flame *= cell * 4.;  //I'd like to say 4 is because I quartered it on the above line, but it's just a sweetspot number.
-    flame -= step(specialFX.x, .1) * .8 * flame;
-    gl_FragColor = vec4(vec3(.75, 0., .15) *  clamp(flame, 0., .2), 1.);
+    vec2 uv = (v_Position * .5) + .25 + 10.;
+    
+    float noise = LayersOfNoise(uv + vec2(0, -u_Time * .5), 16.);
+    float offs = ((noise - .5) * 2.) * .25;
+
+    noise = LayersOfNoise(uv + offs + vec2(0, -u_Time * 1.), 16.);
+    float gradientNoise = noise * (-v_Position.y + .5);
+    gradientNoise = smoothstep(.5, .75, gradientNoise);
+
+    gl_FragColor = vec4(vec3(.75, 0., .15) *  clamp(gradientNoise, 0., .2), 1.);
 }
