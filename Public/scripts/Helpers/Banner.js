@@ -85,12 +85,12 @@ async function initRenderers() {
     let highFilterPass = new Shader(await (await fetch("./resources/gl/shaders/HighPassFilter.glsl")).text());
     covers["A Late Night"].addRenderPass(new PostPass(highFilterPass, () => {
         highFilterPass.setTexture2D("u_MainTex", effectBuffer.renderTexture);
-        highFilterPass.setFloat("u_Threshold", .5);
+        highFilterPass.setFloat("u_Threshold", 0);
         highFilterPass.setFloat("u_Range", 0);
     }));
 
     // Step 3:
-    let diffusionPasses = 4;
+    let diffusionPasses = 8;
     let diffusionPass = new Shader(await (await fetch("./resources/gl/shaders/GBlur.glsl")).text());
     for (let i = 0; i < diffusionPasses - 1; i++) {
         covers["A Late Night"].addRenderPass(new PostPass(diffusionPass, () => {
@@ -110,14 +110,14 @@ async function initRenderers() {
     // Step 5:
     let chromabShader = new Shader(await (await fetch("./resources/gl/shaders/Chromab.glsl")).text());
     covers["A Late Night"].addRenderPass(new PostPass(chromabShader, () => {
-        chromabShader.setFloat("u_Offset", .0025 * Math.sin(Clock.current));
+        chromabShader.setFloat("u_Offset", .002 * Math.sin(Clock.current));
         chromabShader.setTexture2D("u_MainTex", covers["A Late Night"].backBuffer.renderTexture);
     }));
 
     // Step 6:
     let fxaaShader = new Shader(await (await fetch("./resources/gl/shaders/FXAA.glsl")).text());
     covers["A Late Night"].addRenderPass(new PostPass(fxaaShader, () => {
-        fxaaShader.setFloat("u_Strength", 128);
+        fxaaShader.setFloat("u_Strength", 512);
         fxaaShader.setTexture2D("u_MainTex", covers["A Late Night"].backBuffer.renderTexture);
     })); 
 }
