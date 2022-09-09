@@ -68,6 +68,9 @@ async function initRenderers() {
             basePass.setTexture2D("u_woodgrainGlossTex", textures.wood_GLOSS);
 
             cameraYRotation += Clock.delta * ((swipe.start - swipe.current) * .01);
+
+            console.log(swipe.start - swipe.current)
+
             basePass.setInt("u_ReflectionsEnabled", window.innerWidth < 720 ? 0 : 1);
             basePass.setInt("u_ShadowsEnabled", window.innerWidth < 480 ? 0 : 1);
 
@@ -136,12 +139,12 @@ async function init(canvasID) {
     // Input
     function addInput(name, action) { context.canvas.addEventListener(name, (event) => action(event)); }
     ["mouseup", "touchend", "touchcancel"].forEach(event => addInput(event, (e) => swipe.active = false));
-    ["mousemove", "touchmove"].forEach(event => addInput(event, (e) => swipe.current = swipe.active ? e.clientX : swipe.current));
+    ["mousemove", "touchmove"].forEach(event => addInput(event, (e) => swipe.current = swipe.active ? (e.clientX || e.touches[0].clientX) : swipe.current));
     ["mousedown", "touchstart"].forEach(event => addInput(event, (e) => {
         if (!descriptions[cover.id]) return; // Don't care about input unless it's 'cool' input.
         swipe.active = true;
-        swipe.start = e.clientX;
-        swipe.current = e.clientX;
+        swipe.start = e.clientX || e.touches[0].clientX;
+        swipe.current = e.clientX || e.touches[0].clientX;
     }));
 
     // Context
