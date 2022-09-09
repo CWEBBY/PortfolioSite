@@ -2,7 +2,7 @@
  */
 
 // Imports / Exports
-import { glBind } from "./GL/API.mjs";
+import { glBind } from "./GL/API.js";
 export { Context };
 
 // Context

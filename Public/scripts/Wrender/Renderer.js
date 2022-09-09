@@ -2,8 +2,8 @@
  */
 
 // Imports / Exports
-import { glViewport } from "./GL/API.mjs";
-import { FrameBuffer } from "./Framebuffer.mjs";
+import { glViewport } from "./GL/API.js";
+import { FrameBuffer } from "./Framebuffer.js";
 export { Renderer };
 
 // Renderer
