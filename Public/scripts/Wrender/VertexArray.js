@@ -3,7 +3,7 @@
 
 
 // Imports / Exports
-import { AttributeBuffer, IndexBuffer } from "./Buffers.mjs";
+import { AttributeBuffer, IndexBuffer } from "./Buffers.js";
 export { VertexArray };
 
 // VertexArray

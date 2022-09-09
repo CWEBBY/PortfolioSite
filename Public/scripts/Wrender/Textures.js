@@ -2,7 +2,7 @@
  */
 
 // Imports / Exports
-import { gl } from "./GL/API.mjs";
+import { gl } from "./GL/API.js";
 export { Texture2D, RenderTexture };
 
 // Texture
