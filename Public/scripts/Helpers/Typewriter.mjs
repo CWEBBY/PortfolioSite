@@ -3,7 +3,7 @@
 
 
 // Imports / Exports
-import { Clock } from "./Clock.js";
+import { Clock } from "./Clock.mjs";
 export { Typewriter };
 
 // Typewriter

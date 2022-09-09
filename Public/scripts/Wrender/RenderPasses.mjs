@@ -4,10 +4,10 @@
 // #FIX: CREATE A BETTER WAY TO GET RESOLUTION! Not context.canvas.?...
 
 // Imports / Exports
-import { Clock } from "./Clock.js";
-import { GLFloat } from "./GL/Enums.js";
-import { gl, glDraw } from "./GL/API.js";
-import { VertexArray } from "./VertexArray.js";
+import { Clock } from "./Clock.mjs";
+import { GLFloat } from "./GL/Enums.mjs";
+import { gl, glDraw } from "./GL/API.mjs";
+import { VertexArray } from "./VertexArray.mjs";
 export { PostPass, CameraPass };
 
 // RenderPass

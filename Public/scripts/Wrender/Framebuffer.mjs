@@ -2,8 +2,8 @@
  */
 
 // Imports / Exports
-import { gl, glViewport } from "./GL/API.js";
-import { RenderTexture } from "./Textures.js";
+import { gl, glViewport } from "./GL/API.mjs";
+import { RenderTexture } from "./Textures.mjs";
 export { FrameBuffer };
 
 // Framebuffer

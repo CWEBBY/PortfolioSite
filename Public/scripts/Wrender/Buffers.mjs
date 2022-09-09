@@ -2,7 +2,7 @@
  */
 
 // Imports / Exports
-import { gl } from "./GL/API.js";
+import { gl } from "./GL/API.mjs";
 export { AttributeBuffer, IndexBuffer }
 
 // Buffer
