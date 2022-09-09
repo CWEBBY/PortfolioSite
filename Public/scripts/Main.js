@@ -2,8 +2,8 @@
  */
 
 // Imports / Exports
-import * as Banner from "./helpers/banner.js";
-import { Typewriter } from "./helpers/typewriter.js";
+import * as Banner from "./Helpers/Banner.js";
+import { Typewriter } from "./Helpers/Typewriter.js";
 
 // Step 0: Ugly chunk of script for basic form feedback until I implement recaptcha.
 if (window.location.search.length > 1 && window.location.search.includes("message=success"))

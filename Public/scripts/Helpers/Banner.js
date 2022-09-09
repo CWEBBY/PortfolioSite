@@ -6,7 +6,6 @@
 // #TODO: Implement DRS loop for undertarget FPS path tracing
 
 // Imports / Exports
-import { DragHandler } from "./Input.js";
 import { Clock } from "./Clock.js";
 import { Shader } from "../Wrender/Shader.js";
 import { Context } from "../Wrender/Context.js";
