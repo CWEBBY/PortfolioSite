@@ -1,0 +1,16 @@
+body {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    font-family: "Gotham";
+}
+
+@media (prefers-color-scheme: dark) { 
+    p { color: #1DB954; }
+    label { color: #e2e2e2; }
+    body { background-color: #1f1f1f; } 
+}
+@media (prefers-color-scheme: light) { 
+    p { color: #0c0c0c; }
+    label { color: #1f1f1f; }
+    body { background-color: #e2e2e2; } 
+}
