@@ -5,39 +5,67 @@
 	<meta charset="UTF-8">
 	<title>Slackify</title>
 	<meta name="author" content="Christopher Webb">
-	<script type="module" src="scripts/Slackify.js"></script>
 	<link rel='stylesheet' type="text/css" href='styles/slackify.css'>
 	<link rel="icon" type="image/png" href="resources/images/icons/slackify.png">
 	<meta name="description" content="Login portal to Slackify Chrome extension.">
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 	<link href="https://fonts.cdnfonts.com/css/gotham" rel="stylesheet">
 </head>
-	<body style="height: 100%; margin: 0;">
-        <div>
-			<div style="height: 100%; 
-			width: 100%; 
+	<body>
+        <div style="
 			background-image: url('./resources/images/icons/slackify.png'); 
 			background-repeat: no-repeat; 
 			background-position: center; 
 			background-size: contain; 
-			filter: blur(16px);"></div>
+			filter: blur(16px);
+			height: 100%;
+			width: 100%;
+		">
 		</div>
-		<div>
-			<div style="
-			display: flex; 
-			justify-content: center;
-			align-items: center; 
-			width: 100%; 
-			height: 100%; 
-			text-align: left;">
-				<p style="margin: 15%" id="stateLabel">
-					<b>SLACKIFY</b><br>
-					[<i>sla-kee-fai</i>] <b>verb.</b><br>
-					<br>
-					To tell your coworkers what you're listening to in a Slack status automatically with a Chrome extension signed into your Spotify account.<br>
-				</p>
-
+		<div style="margin: auto; width: 80%;">
+			<p>
+				<b>SLACKIFY</b><br>
+				[<i>sla-kee-fai</i>] <b>verb.</b><br>
+			</p>
+			<p id="message">
+				To tell your coworkers what you're listening to in a Slack status automatically with a Chrome extension signed into your Spotify account.
+			</p>
+			<div id="loggedOutSection" style="display: none;">
+				<button id="signInButton">Sign in to Spotify</button>
 			</div>
+			<div id="loggedInSection" style="display: none;" class="panel">
+				<table style="width: 100%; ">
+					<tr>
+						<td><label for="userToken">User Token:</label></td>
+						<td><textarea id="userTokenInput" name="userToken" id="" rows="1" placeholder="Add your Slack user token."></textarea></td>
+					</tr>
+	
+					<tr>
+						<td><label for="formats">Formats:</label></td>
+						<td><textarea id="formatsInput" name="formats" id="" rows="1" placeholder="Add new status formats."></textarea></td>
+					</tr>
+	
+					<tr>
+						<td><label for="emojis">Emojis:</label></td>
+						<td><textarea id="emojisInput" name="emojis" id="" rows="1" placeholder="Add new status emojis."></textarea></td>
+					</tr>
+				</table>
+				
+				<button id="saveButton" style="width: 90%; margin: 5%;">Save</button>
+				
+				<hr>
+				<div id="playerRoot" style="display: grid; grid-template-rows: 50% 50%;" class="player">
+					<p id="playerFormat" style="margin: auto;" class="label"></p>
+					<div style="display: grid; align-items: center; grid-template-columns: 15% 70% 15%;">
+						<p id="playerLeftLabel" class="label left"></p>
+						<div id="playerBarRoot" style="width: 100%; height: 25%; border-radius: 5px; background-color: black;">
+							<div id="playerBar" style="height: 90%; background-color: brown; border-radius: 5px;"></div>
+						</div>
+						<p id="playerRightLabel" class="label right"></p>
+					</div>
+				</div>
+			</div>
+
 		</div>
     </body>	
 </html>
