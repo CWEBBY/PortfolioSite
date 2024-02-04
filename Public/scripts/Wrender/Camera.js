@@ -1,48 +1,56 @@
-/* ~/Core/Renderer.js, Cwebb.
+/* ~/Core/Camera.js, Cwebb.
  */
 
 // Imports / Exports
+import { Clock } from "./Clock.js";
+import { Shader } from "./Shader.js";
 import { glViewport } from "./GL/API.js";
 import { FrameBuffer } from "./Framebuffer.js";
-export { Renderer };
 
-// Renderer
-class Renderer {
+export { Camera };
+
+// Camera
+class Camera {
     constructor(context, params = {}) {
         this.passes = [];
         this.backBuffer = null;
+        
         this.size = {
             width: context.canvas.width,
             height: context.canvas.height
         }
+        
         this.buffers = [
             new FrameBuffer(context.canvas.width, context.canvas.height),
             new FrameBuffer(context.canvas.width, context.canvas.height)
         ];
+        
         this.viewport = {
             x: params?.viewport?.x || 0,
             y: params?.viewport?.y || 0,
             width: params?.viewport?.width || 1,
             height: params?.viewport?.height || 1
         };
+
         context.addRenderer(this);
     }
 
     // Vars
     size;
-    passes;
-    buffers;
     viewport;
+    
+    buffers;
     backBuffer;
 
+    prepasses;
+    postpasses;
+    
     // Functions
-    getPass(id) { return this.passes[id]; }
     addRenderPass(renderPass) {
         this.passes.push(renderPass)
         return this.passes.length - 1;
     }
 
-    getBuffer(id) { return this.buffers[id]; }
     addBuffer(framebuffer) {
         this.buffers.push(framebuffer)
         return this.buffers.length - 1;
@@ -50,10 +58,23 @@ class Renderer {
 
     resize(width, height) {
         this.size = { width, height };
-        for (let i = 0; i < this.buffers.length; i++) this.buffers[i].resize(this.viewport.width * width, this.viewport.height * height);
+
+        for (let i = 0; i < this.buffers.length; i++) 
+            this.buffers[i].resize(this.viewport.width * width, this.viewport.height * height);
     }
 
-    render() {
+    render(scene = null) {
+        Shader.SetGlobalFloat("uTIME", Clock.current);
+        Shader.SetGlobalFloat2("uRESOLUTION", [this.size.width, this.size.height]);
+
+        // All the prepasses.
+
+
+        // Then render the scene.
+
+
+        // All the postpasses.
+
         for (let pass = 0; pass < this.passes.length; pass++) {
             let isLastPass = pass >= this.passes.length - 1;
             if (isLastPass) {

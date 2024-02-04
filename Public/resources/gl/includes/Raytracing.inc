@@ -1,14 +1,8 @@
-
 #define MAX_MARCH_STEPS 75
 #define MAX_MARCH_DISTANCE 75.
 #define MIN_MARCH_DISTANCE .01
 
-struct SDFObject
-{
-    float dist;
-    int id;
-};
-
+// MATERIAL
 struct Material
 {
     vec4 albedo;
@@ -16,22 +10,20 @@ struct Material
     float gloss;
 };
 
-// RAY
-struct Ray
-{
-    vec3 startPos;
-    vec3 endPos;
-    vec3 dir;
-    vec3 vel;
-    int steps;
-    Material hitMat;
-};
-
-
 // RAY HIT
 struct RayHit
 {
-    bool hit;
     vec3 position;
     Material material;
+};
+
+// RAY
+struct Ray
+{
+    vec3 origin;
+    vec3 direction;
+    float distance;
+
+    bool isHit;
+    Material hitMat;
 };

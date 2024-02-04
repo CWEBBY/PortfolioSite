@@ -1,9 +1,9 @@
 #shader vertex
 
-#include Auto
+#include "./resources/gl/includes/Auto.inc"
 
 attribute vec4 a_Position;
-attribute vec2 a_Texcoords;
+layout(location = 1) in vec2 a_Texcoords;
 
 varying vec2 v_Position;
 
@@ -17,7 +17,7 @@ void main()
 #shader fragment
 precision highp float;
 
-#include Auto
+#include "./resources/gl/includes/Auto.inc"
 
 uniform float u_Size;
 
@@ -32,7 +32,7 @@ void main()
     uv *= max(u_Size, 5.);
     vec2 hexAspect = vec2(1.732, 1.);
     vec2 gridA = mod(uv, hexAspect) - (hexAspect* .5);
-    vec2 gridB = mod(uv - (hexAspect* .5), hexAspect) - (hexAspect* .5);
+    vec2 gridB = mod(uv - (hexAspect* .5), hexAspect) - (hexAspect* .5); 
     vec2 grid = abs(mix(gridA, gridB, step(length(gridB), length(gridA))));
     float h = smoothstep(.4, .5,  Hex(grid));
     uv /=  1. - ((sin(u_Time) + 1.) * .5) * .1;

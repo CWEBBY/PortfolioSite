@@ -1,67 +1,68 @@
 #shader vertex
 uniform vec2 u_Resolution;
+uniform mat4 u_V_MATRIX;
+uniform mat4 u_P_MATRIX;
+uniform mat4 u_VP_MATRIX;
 
 attribute vec4 a_Position;
 attribute vec2 a_Texcoords;
 
-varying vec2 v_RayDir;
+varying vec2 v_rayDir;
 
 void main()
 {
-    v_RayDir = ((a_Texcoords - .5) * u_Resolution) / u_Resolution.y;
+    v_rayDir = a_Texcoords;
     gl_Position = a_Position;
 }
 
 #shader fragment
 precision highp float;
 
-#define INF 999999. 
-#define EPS .000001 
-#define MAX_VERTS (4096 * 4096) 
+#define VERTS 431
 
-uniform sampler2D u_Mesh;
+uniform sampler2D u_BUNNY_VERTS;
 
-uniform int u_VerticesCount;
-uniform float u_CameraYRotation;
-
-varying vec2 v_RayDir;
-
-mat2 rotate(float angle) 
-{ 
-    return mat2(
-        vec2(cos(angle), -sin(angle)),
-        vec2(sin(angle), cos(angle))
-    ); 
-}
+varying vec2 v_rayDir;
 
 void main()
 {
-    vec3 color = vec3(0);
+    float fov = 5.0;
+    vec3 rayOrigin = vec3(0, 0, 5);
+    vec3 rayDirection = vec3(v_rayDir.x * fov, v_rayDir.y * fov, 1.0);
 
-    vec3 cameraPosition = vec3(0., 7.5, -25.);  
-    vec3 cameraDirection = normalize(vec3(v_RayDir - vec2(0., .125), 1.));
-
-    cameraPosition.xz *= rotate(u_CameraYRotation);
-    cameraDirection.xz *= rotate(u_CameraYRotation);
-
-    float texelWidth = 1. / float(u_VerticesCount);
-   
-    for (int i = 0; i < MAX_VERTS; i += 3) 
+    float vertSize = 1.0 / float(VERTS);
+    for (int tri = 0; tri < VERTS; tri += 3)
     {
-        if (i >= u_VerticesCount) break; 
+        vec3 v1 = texture2D(u_BUNNY_VERTS, 
+            vec2(float(tri + 0) * vertSize, 0.0)).rgb;
+        vec3 v2 = texture2D(u_BUNNY_VERTS, 
+            vec2(float(tri + 1) * vertSize, 0.0)).rgb;
+        vec3 v3 = texture2D(u_BUNNY_VERTS, 
+            vec2(float(tri + 2) * vertSize, 0.0)).rgb;
 
-        vec3 v1 = texture2D(u_Mesh, vec2(i + 0, 0)).rgb;
-        vec3 v2 = texture2D(u_Mesh, vec2(i + 1, 0)).rgb;
-        vec3 v3 = texture2D(u_Mesh, vec2(i + 2, 0)).rgb;
+        vec3 edge12 = v2 - v1;
+        vec3 edge13 = v3 - v1;
 
-        Ray eyeRay = Ray(cameraPosition, cameraDirection);
-        IntersectResult test = trace(eyeRay);
+        vec3 normal = cross(edge12, edge13);
+        float determinant = dot(normal, v1);
+        float normalDeterminant = dot(normal, rayDirection);
 
-        if (test.hit)
+        if (normalDeterminant != 0) 
         {
             
         }
+/*
+if(nd!=0)
+{    //The ray hits the triangles plane
+    Intersection.t=(d- (normal).DotProduct(rayOrig))/nd
+    Intersection.hitPoint=rayOrig+(rayDir*Intersection.t)
+    if (pointInTriangle(Intersection.hitPoint, A, B, C))
+    {
+         Intersection.hasHit = true
     }
-    
-    gl_FragColor = vec4(color, 1);
+}
+*/
+    }
+
+    gl_FragColor = texture2D(u_BUNNY_VERTS, v_rayDir);
 }

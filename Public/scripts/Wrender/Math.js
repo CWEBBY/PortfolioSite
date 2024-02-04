@@ -2,7 +2,7 @@
  */
 
 // Imports / Exports
-export { ortho };
+export { ortho, lerp };
 
 // Functions
 function ortho(left, right, bottom, top, near, far, fov = null) {
@@ -16,4 +16,8 @@ function ortho(left, right, bottom, top, near, far, fov = null) {
         0,                              0,                              ndcSize.z,                      0,
         -(projOffset.x / projSize.x),   -(projOffset.y / projSize.y),   -(projOffset.z / projSize.z),   1,
     ];
+}
+
+function lerp(a, b, v) {
+    return a + ((b - a) * v);
 }

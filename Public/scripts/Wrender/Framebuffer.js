@@ -14,11 +14,8 @@ class FrameBuffer {
 
         this.bind();
         gl.framebufferTexture2D(
-            gl.FRAMEBUFFER,
-            gl.COLOR_ATTACHMENT0,
-            gl.TEXTURE_2D,
-            this.renderTexture.id,
-            0
+            gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
+            gl.TEXTURE_2D, this.renderTexture.id, 0
         );
         this.unbind();
     }
