@@ -6,129 +6,98 @@ import { gl } from "./GL/API.js";
 export { Shader };
 
 // Vars
+const shaders = [];
 const includes = {};
-
-// Functions
-function parseShaderDefine(define) {
-    switch (define.toLowerCase()) {
-        case "v": case "vert": case "vertex":
-            return "VERTEX_SHADER"; break;
-        case "f": case "frag": case "fragment": case "pixel":
-            return "FRAGMENT_SHADER"; break;
-        default: console.warn("Shader type [" + shaderDef + "] not supported"); break;
-    }
-}
-
-function parseShader(string) {
-    let attributes = [];
-    let slots = [];
-    let stages = {};
-    let stage = null;
-
-    string.split("\r\n").forEach(line => {
-        if (line.includes("#shader")) {
-            let shaderDef = line.replace("#shader", "").trim();
-            stage = parseShaderDefine(shaderDef);
-        }
-        else if (line.includes("#include")) {
-            let include = parseInclude(line.replace("#include", "").trim());
-            stages[stage] = stages[stage] ?
-                stages[stage] + include + "\n" :
-                include;
-        }
-        else stages[stage] = stages[stage] ? stages[stage] + line + "\n" : line;
-        if (line.includes("attribute")) attributes.push(line.split(" ")[2].replace(";", ""));
-        if (line.includes("sampler2D")) slots.push(line.split(" ")[2].replace(";", ""));
-    });
-
-    return { attributes, slots, stages };
-}
-
-function parseInclude(name) {
-    let lines = [];
-    let parsed = [];
-    if (includes[name]) lines = includes[name].split("\r\n");
-
-    for (let line in lines) {
-        let unparsed = lines[line];
-        if (unparsed.includes("#include"))
-            parsed += parseInclude(unparsed.replace("#include", "").trim());
-        else parsed += lines[line];
-        parsed += "\n";
-    }
-
-    return parsed;
-}
 
 // Shader
 class Shader {
-    constructor(vertex, fragment) {
-        let stages = { VERTEX_SHADER: vertex,
-                       FRAGMENT_SHADER: fragment };
+    constructor(source) {
 
         // Step 0: Create the program.
         this.id = gl.createProgram();
 
         // Step 1: Compile all stages and attach.
-        for (let stage in stages) {
-            let source = stages[stage];
-            stage = gl.createShader(gl[stage]);
+        for (let stage in source) {
+            let shader = gl.createShader(gl[stage]);
+            gl.shaderSource(shader, source[stage]);
+            gl.compileShader(shader);
 
-            gl.shaderSource(stage, source);
-            gl.compileShader(stage);
-
-            if (!gl.getShaderParameter(stage, gl.COMPILE_STATUS)) {
-                console.error(gl.getShaderInfoLog(stage));
-                gl.deleteShader(stage);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error(gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
                 return null;
             }
 
-            gl.attachShader(this.id, stage);
+            let lines = source[stage]
+                .replace(/\r?\n/, "\n")
+                .split(/[{;}]/);
+
+            let attribPtr = 0;
+            for (let line in lines) {
+                if (lines[line].startsWith("attribute ")) {
+                    gl.bindAttribLocation(this.id, attribPtr, lines[line].split(" ").slice(-1));
+                    attribPtr++;
+                }
+            }
+                
+            gl.attachShader(this.id, shader);
         }
 
-        // Step 2: Catch the attributes and samplers.
+        gl.linkProgram(this.id);
+        if (!gl.getProgramParameter(this.id, gl.LINK_STATUS)) {
+            console.error(gl.getProgramInfoLog(this.id));
+            gl.deleteProgram(this.id);
+        }
+        else {
+            // Step 5: If that worked, get all uniform locations via introspection...
+            gl.useProgram(this.id); // Intentionally leave bound for any initial uniform setting right after...
+            let uniforms = gl.getProgramParameter(this.id, gl.ACTIVE_UNIFORMS);
+            for (let i = 0; i < uniforms; i++) { // Auto-cache locations.
+                let uniform = gl.getActiveUniform(this.id, i);
 
+                if (uniform.type == gl.SAMPLER_2D) { this.samplers.push(uniform.name); }
+                this.uniforms[uniform.name] = gl.getUniformLocation(this.id, uniform.name);
+            }
+        }
 
-        // Step 3: A WGLv1 workaround to WGLv2 layouts. 
-        // To enable my vert array class to work, attributes are given a location from their order in declaration.
-        //for (let attribute in source.attributes)
-        //    gl.bindAttribLocation(this.id, attribute, source.attributes[attribute]);
-
-        //// Step 3: A quick auto slot assignment for textures...
-        //let textures = Object.values(source.slots);
-        //for (let slot = 0; slot < textures.length; slot++) this.slots[textures[slot]] = slot;
-
-        //// Step 4: Link stages, or delete a stage and hope the shader still runs.
-        //gl.linkProgram(this.id);
-        //if (!gl.getProgramParameter(this.id, gl.LINK_STATUS)) {
-        //    console.error(gl.getProgramInfoLog(this.id));
-        //    gl.deleteProgram(this.id);
-        //}
-        //else {
-        //    // Step 5: If that worked, get all uniform locations via introspection...
-        //    gl.useProgram(this.id); // Intentionally leave bound for any initial uniform setting right after...
-        //    let uniformCount = gl.getProgramParameter(this.id, gl.ACTIVE_UNIFORMS);
-        //    for (let i = 0; i < uniformCount; i++) { // Auto-cache locations.
-        //        let name = gl.getActiveUniform(this.id, i).name;
-        //        this.uniforms[name] = gl.getUniformLocation(this.id, name);
-        //    }
-        //}
+        shaders.push(this);
     }
 
     // ASYNC. This is the ONLY way to prime the include cache.
     static async fromURL(url) {
+        const STAGE_SOURCE = {};
 
+        let fileSource = await fetch(url);
+        fileSource = await fileSource.text();
+        fileSource = fileSource.split(/\r?\n/);
 
+        let stage = undefined;
+        for (let line of fileSource) {
+            if (line.startsWith("#shader ")) 
+            {
+                stage = line.slice("#shader ".length).trim();
+                STAGE_SOURCE[stage] = STAGE_SOURCE[stage] || "";
+                continue;
+            }
 
-        return new Shader({
-            "VERTEX_SHADER": "asdasdasd",
-            "FRAGMENT_SHADER": "asdasdsaaaafffff"
-        });
+            if (line.startsWith("#include ")) {
+                line = line.slice("#include ".length)
+                    .replace(/\"/g, "").trim();
+
+                if (!includes[line])
+                    includes[line] = await (await fetch(line)).text();
+                line = includes[line];
+            }
+
+            STAGE_SOURCE[stage] += `${line}\n`;
+        }
+
+        return new Shader(STAGE_SOURCE);
     }
 
     // Vars
     id;
-    slots = {};
+    samplers = [];
     uniforms = {};
 
     // Functions
@@ -136,36 +105,38 @@ class Shader {
     bind() { gl.useProgram(this.id); }
     static include(name, source) { includes[name] = source; }
 
-    setInt(name, value) { gl.uniform1i(this.uniforms[name], value) }
-    setInt2(name, value) { gl.uniform2iv(this.uniforms[name], value) }
-    setInt3(name, value) { gl.uniform3iv(this.uniforms[name], value) }
-    setInt4(name, value) { gl.uniform4iv(this.uniforms[name], value) }
-    setBool(name, value) { gl.uniform1i(this.uniforms[name], value) }
-    setFloat(name, value) { gl.uniform1f(this.uniforms[name], value) }
-    setFloat2(name, value) { gl.uniform2fv(this.uniforms[name], value) }
-    setFloat3(name, value) { gl.uniform3fv(this.uniforms[name], value) }
-    setFloat4(name, value) { gl.uniform4fv(this.uniforms[name], value) }
-    setMatrix2x2(name, value) { gl.uniformMatrix2fv(this.uniforms[name], false, value) }
-    setMatrix3x3(name, value) { gl.uniformMatrix3fv(this.uniforms[name], false, value) }
-    setMatrix4x4(name, value) { gl.uniformMatrix4fv(this.uniforms[name], false, value) }
+    setInt(name, value) { this.bind(); gl.uniform1i(this.uniforms[name], value); this.unbind(); }
+    setInt2(name, value) { this.bind(); gl.uniform2iv(this.uniforms[name], value); this.unbind(); }
+    setInt3(name, value) { this.bind(); gl.uniform3iv(this.uniforms[name], value); this.unbind(); }
+    setInt4(name, value) { this.bind(); gl.uniform4iv(this.uniforms[name], value); this.unbind(); }
+    setBool(name, value) { this.bind(); gl.uniform1i(this.uniforms[name], value); this.unbind(); }
+    setFloat(name, value) { this.bind(); gl.uniform1f(this.uniforms[name], value); this.unbind(); }
+    setFloat2(name, value) { this.bind(); gl.uniform2fv(this.uniforms[name], value); this.unbind(); }
+    setFloat3(name, value) { this.bind(); gl.uniform3fv(this.uniforms[name], value); this.unbind(); }
+    setFloat4(name, value) { this.bind(); gl.uniform4fv(this.uniforms[name], value); this.unbind(); }
+    setMatrix2x2(name, value) { this.bind(); gl.uniformMatrix2fv(this.uniforms[name], false, value); this.unbind(); }
+    setMatrix3x3(name, value) { this.bind(); gl.uniformMatrix3fv(this.uniforms[name], false, value); this.unbind(); }
+    setMatrix4x4(name, value) { this.bind(); gl.uniformMatrix4fv(this.uniforms[name], false, value); this.unbind(); }
 
     setTexture2D(name, texture2D) {
-        this.setInt(name, this.slots[name]);
-        texture2D.bind(this.slots[name]);
+        this.bind();
+        this.setInt(name, this.samplers.indexOf(name));
+        texture2D.bind(this.samplers.indexOf(name));
+        this.unbind();
     }
 
-    static setStaticInt(name, value) { console.log(name + value);  }
-    static setStaticInt2(name, value) { console.log(name + value); }
-    static setStaticInt3(name, value) { console.log(name + value); }
-    static setStaticInt4(name, value) { console.log(name + value); }
-    static setStaticBool(name, value) { console.log(name + value); }
-    static setStaticFloat(name, value) { console.log(name + value); }
-    static setStaticFloat2(name, value) { console.log(name + value); }
-    static setStaticFloat3(name, value) { console.log(name + value); }
-    static setStaticFloat4(name, value) { console.log(name + value); }
-    static setStaticMatrix2x2(name, value) { console.log(name + value); }
-    static setStaticMatrix3x3(name, value) { console.log(name + value); }
-    static setStaticMatrix4x4(name, value) { console.log(name + value); }
+    static setStaticInt(name, value) { shaders.forEach(shader => shader.setInt(name, value)); }
+    static setStaticInt2(name, value) { shaders.forEach(shader => shader.setInt2(name, value)); }
+    static setStaticInt3(name, value) { shaders.forEach(shader => shader.setInt3(name, value)); }
+    static setStaticInt4(name, value) { shaders.forEach(shader => shader.setInt4(name, value)); }
+    static setStaticBool(name, value) { shaders.forEach(shader => shader.setBool(name, value)); }
+    static setStaticFloat(name, value) { shaders.forEach(shader => shader.setFloat(name, value)); }
+    static setStaticFloat2(name, value) { shaders.forEach(shader => shader.setFloat2(name, value)); }
+    static setStaticFloat3(name, value) { shaders.forEach(shader => shader.setFloat3(name, value)); }
+    static setStaticFloat4(name, value) { shaders.forEach(shader => shader.setFloat4(name, value)); }
+    static setStaticMatrix2x2(name, value) { shaders.forEach(shader => shader.setMatrix2x2(name, value)); }
+    static setStaticMatrix3x3(name, value) { shaders.forEach(shader => shader.setMatrix3x3(name, value)); }
+    static setStaticMatrix4x4(name, value) { shaders.forEach(shader => shader.setMatrix4x4(name, value)); }
 
-    static setStaticTexture2D(name, texture2D) { console.log(name + texture2D); }
+    static setStaticTexture2D(name, texture2D) { shaders.forEach(shader => shader.setTexture2D(name, texture2D)); }
 }

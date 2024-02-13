@@ -11,7 +11,5 @@ uniform vec3 u_LightPositions[LIGHTS_MAX_COUNT];
 
 vec3 linearToGamma(vec3 linear) 
 {
-	// A weird little gamma space hack.
-	// Courtesy of https://www.shadertoy.com/view/4dt3zn.
 	return sqrt(clamp(linear, 0., 1.));
 }

@@ -36,27 +36,28 @@ class Buffer {
 class AttributeBuffer extends Buffer {
     constructor(layout, usage) {
         super("ARRAY_BUFFER", usage);
+        this.layout = layout;
+    }
 
-        this.bind();
+    // Functions 
+    bind() {
+        super.bind();
         let count = { stride: 0, offset: 0 };
 
         // Step 1: Count the stride... a distance measured in how large (in bytes) each vertex is.
-        Object.values(layout).forEach(attributeType => count.stride += attributeType.size);
+        Object.values(this.layout).forEach(attributeType => count.stride += attributeType.size);
 
         // Step 2: For every attribute, in order, do the following:
         // 1) Enable the pointer, 2) Set the pointer, then, 3) Track aggregate size for offset of following attributes.
-        let layoutOrder = Object.keys(layout);
+        let layoutOrder = Object.keys(this.layout);
         for (let i = 0; i < layoutOrder.length; i++) {
-            let attribute = layout[layoutOrder[i]];
+            let attribute = this.layout[layoutOrder[i]];
             gl.enableVertexAttribArray(i);
             gl.vertexAttribPointer(i, attribute.length, gl[attribute.type], false, count.stride, count.offset);
             count.offset += attribute.size;
         }
-
-        this.unbind();
     }
 
-    // Functions 
     set(data) { super.set(new Float32Array(data)); }
 }
 

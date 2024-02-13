@@ -1,5 +1,6 @@
-#shader vertex
-uniform vec2 u_Resolution;
+#shader VERTEX_SHADER
+
+#include "./resources/gl/includes/Auto.inc"
 
 attribute vec4 a_Position;
 
@@ -8,16 +9,15 @@ varying vec2 v_Position;
 void main()
 {
     v_Position = a_Position.xy;
-    v_Position.x *= u_Resolution.x / u_Resolution.y;
+    v_Position.x *= RESOLUTION.x / RESOLUTION.y;
     gl_Position = a_Position;
 }
 
-#shader fragment
+#shader FRAGMENT_SHADER
 precision highp float;
 
-#include Random
-
-uniform float u_Time;
+#include "./resources/gl/includes/Random.inc"
+#include "./resources/gl/includes/Auto.inc"
 
 varying vec2 v_Position;
 
@@ -32,7 +32,7 @@ float SmoothNoiseLayer(vec2 uv)
     nCol += SmoothRand21(uv*64.) * .0625;
     nCol += SmoothRand21(uv*128.) * .03125;
     nCol += SmoothRand21(uv*256.) * .0015125;
-    nCol /= 2.; //~est. of the weightings.
+    nCol /= 2.;
 
     return nCol;
 }
@@ -40,7 +40,7 @@ float SmoothNoiseLayer(vec2 uv)
 void main()
 {
     vec2 uv = v_Position;
-    vec2 speed = u_Time * vec2(-.06125,.025);
+    vec2 speed = TIME * vec2(-.06125,.025);
     float noise1 = SmoothNoiseLayer(uv + speed);
     float noise2 = SmoothNoiseLayer(uv * vec2(1., 1.) + speed * vec2(-1.123486, 2.18413212));
     float noise3 = SmoothNoiseLayer(uv * vec2(1., 1.) + speed * vec2(2.231156, -1.913483));

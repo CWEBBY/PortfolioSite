@@ -21,8 +21,6 @@ float sdfTorus(vec3 viewPos, vec3 pos, vec2 t) {
 
 float sdfCylinder(vec3 p, vec3 a, vec3 b, float r)
 {
-    //SDF courtesy of BigWings.
-    //https://www.shadertoy.com/view/wdf3zl
     vec3 ab = b-a;
     vec3 ap = p-a;
     float t = dot(ab, ap) / dot(ab, ab);
@@ -34,7 +32,6 @@ float sdfCylinder(vec3 p, vec3 a, vec3 b, float r)
     return e+i;
 }
 
-//-----------------------------------------------------------
 float sdfSphere(vec3 position, float radius)
 {
     return length(position) - radius;

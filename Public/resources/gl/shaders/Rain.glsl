@@ -1,5 +1,5 @@
-#shader vertex
-uniform vec2 u_Resolution;
+#shader VERTEX_SHADER
+uniform vec2 RESOLUTION;
 
 attribute vec4 a_Position;
 
@@ -8,28 +8,28 @@ varying vec2 v_Position;
 void main()
 {
     v_Position = a_Position.xy;
-    v_Position.x *= u_Resolution.x / u_Resolution.y;
+    v_Position.x *= RESOLUTION.x / RESOLUTION.y;
     gl_Position = a_Position;
 }
 
-#shader fragment
+#shader FRAGMENT_SHADER
 precision highp float;
 
-#include Random
+#include "./resources/gl/includes/Random.inc"
 
 varying vec2 v_Position;
-uniform float u_Time;
+uniform float TIME;
 
 float DropsLayer(vec2 UV, float Time, float Size)
 {
     vec2 dropAspect = vec2(2., 1.);
     vec2 uv = UV;
     uv *= dropAspect * Size;
-    uv.y += u_Time * .25;
+    uv.y += TIME * .25;
     vec2 gridCell = floor(uv);
     vec2 gridUV = fract(uv) - .5;
     float cellRandom = Rand21(gridCell);
-    float time = u_Time + (cellRandom * 6.28); //2 * pi
+    float time = TIME + (cellRandom * 6.28); 
     float dropMovement = sin(3.* UV.y * 10.) * pow(sin(UV.y * 10.), 6.) * .4;
     vec2 speed = vec2(abs(((cellRandom - .5) * 2.)) * dropMovement, -sin(time + sin(time + sin(time) * .5)) * .4);
     speed.y += -pow(gridUV.x - speed.x, 2.);
@@ -49,9 +49,9 @@ void main()
 {
     vec2 uv = v_Position * .5;
 
-    float drops = DropsLayer(uv + 1., u_Time, 10.);
-    drops += DropsLayer(uv + .75, u_Time, 9.);
-    drops += DropsLayer(uv + .5, u_Time, 8.);
-    drops += DropsLayer(uv + .25, u_Time, 7.);
+    float drops = DropsLayer(uv + 1., TIME, 10.);
+    drops += DropsLayer(uv + .75, TIME, 9.);
+    drops += DropsLayer(uv + .5, TIME, 8.);
+    drops += DropsLayer(uv + .25, TIME, 7.);
     gl_FragColor = vec4(vec3(.75, 0., .15) *  clamp(drops, 0., .2), 1.);
 }

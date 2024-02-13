@@ -2,98 +2,116 @@
  */
 
 // Imports / Exports
-import { Clock } from "./Clock.js";
-import { Shader } from "./Shader.js";
+import { GLCommandBuffer } from "./GLCommandBuffer.js";
 import { glViewport } from "./GL/API.js";
-import { FrameBuffer } from "./Framebuffer.js";
-
-export { Camera };
+import { Mat4x4 } from "./Mat4x4.js";
+export { Camera, OrthographicCamera, PerspectiveCamera };
 
 // Camera
 class Camera {
     constructor(context, params = {}) {
-        this.passes = [];
-        this.backBuffer = null;
-        
-        this.size = {
-            width: context.canvas.width,
-            height: context.canvas.height
-        }
-        
-        this.buffers = [
-            new FrameBuffer(context.canvas.width, context.canvas.height),
-            new FrameBuffer(context.canvas.width, context.canvas.height)
-        ];
-        
-        this.viewport = {
-            x: params?.viewport?.x || 0,
-            y: params?.viewport?.y || 0,
-            width: params?.viewport?.width || 1,
-            height: params?.viewport?.height || 1
-        };
+        this.context = context;
 
-        context.addRenderer(this);
+        this.farClip = params["farClip"] || 1;
+        this.nearClip = params["nearClip"] || 0;
+
+        this.glCommandBuffer = new GLCommandBuffer();
+    }
+
+    // Vars
+    context;
+    commandBuffer;
+
+    translation;
+    rotation; // maybe consolidate all transforms into a parent class?
+
+    farClip;
+    nearClip;
+
+    // Properties
+    get aspectRatio() { return this.context.canvas.width / this.context.canvas.height; }
+
+    // Functions
+    render(scene) {
+        let translationMat = new Mat4x4();
+        let rotationMat = new Mat4x4();
+        let scaleMat = new Mat4x4();
+
+        let RSMat = new Mat4x4();
+        let TRSMat = new Mat4x4();
+
+        this.glCommandBuffer.clearRenderTarget(0, 0, 0, 1);
+        // Upload light uniforms here...
+
+        glViewport(0, 0, // IDK what to do about this? 
+            this.context.canvas.width, // break the viewport up?
+            this.context.canvas.height // Find the aspect of that later? 
+        ); // ...then maybe apply THAT aspect to the VP mat?
+
+        for (let entity of scene.entities) {
+            translationMat = Mat4x4.Translation(entity.translation);
+            rotationMat = Mat4x4.Rotation(entity.rotation);
+            scaleMat = Mat4x4.Scale(entity.scale);
+
+            Mat4x4.multiply(RSMat, rotationMat, scaleMat);
+            Mat4x4.multiply(TRSMat, translationMat, RSMat);
+
+            this.glCommandBuffer.setStaticMatrix4x4("M", TRSMat.array);
+            this.glCommandBuffer.drawMesh(entity.mesh, entity.shader);
+        }
+
+        this.context.executeGLCommandBuffer(this.glCommandBuffer);
+        this.glCommandBuffer.clearCommands();
+    }
+}
+
+class PerspectiveCamera extends Camera {
+    constructor(context, params = {}) {
+        super(context, params);
+
+        this.fov = params["fov"] || 60;
+    }
+
+    // Vars 
+    fov;
+
+    // Functions
+    render(scene) {
+        this.glCommandBuffer.setStaticMatrix4x4("VP",
+            Mat4x4.perspective(
+                this.aspectRatio, this.fov,
+                this.nearClip, this.farClip
+            ).array
+        );
+
+        super.render(scene);
+    }
+}
+
+class OrthographicCamera extends Camera {
+    constructor(context, params = {}) {
+        super(context, params);
+
+        this.size = params["size"] || 1;
     }
 
     // Vars
     size;
-    viewport;
-    
-    buffers;
-    backBuffer;
 
-    prepasses;
-    postpasses;
-    
     // Functions
-    addRenderPass(renderPass) {
-        this.passes.push(renderPass)
-        return this.passes.length - 1;
-    }
+    render(scene) {
+        let halfHeight = this.size / 2;
+        let halfWidth = (this.size * this.aspectRatio) / 2;
 
-    addBuffer(framebuffer) {
-        this.buffers.push(framebuffer)
-        return this.buffers.length - 1;
-    }
+        this.glCommandBuffer.setStaticMatrix4x4("VP",
+            Mat4x4.ortho(
+                -halfWidth, halfWidth,
+                -halfHeight, halfHeight,
+                this.nearClip, this.farClip
+            ).array
+        );
 
-    resize(width, height) {
-        this.size = { width, height };
-
-        for (let i = 0; i < this.buffers.length; i++) 
-            this.buffers[i].resize(this.viewport.width * width, this.viewport.height * height);
-    }
-
-    render(scene = null) {
-        Shader.SetGlobalFloat("uTIME", Clock.current);
-        Shader.SetGlobalFloat2("uRESOLUTION", [this.size.width, this.size.height]);
-
-        // All the prepasses.
-
-
-        // Then render the scene.
-
-
-        // All the postpasses.
-
-        for (let pass = 0; pass < this.passes.length; pass++) {
-            let isLastPass = pass >= this.passes.length - 1;
-            if (isLastPass) {
-                glViewport(
-                    this.viewport.x * this.size.width,
-                    this.viewport.y * this.size.height,
-                    this.viewport.width * this.size.width,
-                    this.viewport.height * this.size.height
-                );
-                this.passes[pass].render();
-            }
-            else {
-                let passFB = this.buffers[this.backBuffer == this.buffers[0] ? 1 : 0];
-                passFB.bind();
-                { this.passes[pass].render(); }
-                passFB.unbind();
-                this.backBuffer = passFB;
-            }
-        }
-        this.backBuffer = null;
+        super.render(scene);
     }
 }
+

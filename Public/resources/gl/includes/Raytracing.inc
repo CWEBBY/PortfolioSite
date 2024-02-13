@@ -2,7 +2,6 @@
 #define MAX_MARCH_DISTANCE 75.
 #define MIN_MARCH_DISTANCE .01
 
-// MATERIAL
 struct Material
 {
     vec4 albedo;
@@ -17,7 +16,6 @@ struct RayHit
     Material material;
 };
 
-// RAY
 struct Ray
 {
     vec3 origin;

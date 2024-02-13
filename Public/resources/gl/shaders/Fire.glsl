@@ -1,6 +1,6 @@
-#shader vertex
+#shader VERTEX_SHADER
 
-#include Auto
+#include "./resources/gl/includes/Auto.inc"
 
 attribute vec4 a_Position;
 
@@ -9,15 +9,15 @@ varying vec2 v_Position;
 void main()
 {
     v_Position = a_Position.xy;
-    v_Position.x *= u_Resolution.x / u_Resolution.y;
+    v_Position.x *= RESOLUTION.x / RESOLUTION.y;
     gl_Position = a_Position;
 }
 
-#shader fragment
+#shader FRAGMENT_SHADER
 precision highp float;
 
-#include Random
-#include Auto
+#include "./resources/gl/includes/Random.inc"
+#include "./resources/gl/includes/Auto.inc"
 
 varying vec2 v_Position;
 
@@ -57,10 +57,10 @@ void main()
     vec2 fireSpeed = vec2(0., -1.);
     vec2 uv = (v_Position * .5) + .25 + 10.;
     
-    float noise = LayersOfNoise(uv + vec2(0, -u_Time * .5), 16.);
+    float noise = LayersOfNoise(uv + vec2(0, -TIME * .5), 16.);
     float offs = ((noise - .5) * 2.) * .25;
 
-    noise = LayersOfNoise(uv + offs + vec2(0, -u_Time * 1.), 16.);
+    noise = LayersOfNoise(uv + offs + vec2(0, -TIME * 1.), 16.);
     float gradientNoise = noise * (-v_Position.y + .5);
     gradientNoise = smoothstep(.5, .75, gradientNoise);
 

@@ -1,5 +1,7 @@
 // Imports / Exports
+import { Context } from "./Context.js";
 import { Shader } from "../Wrender/Shader.js";
+import { glDraw, glClear } from "./GL/API.js";
 
 export { GLCommandBuffer };
 
@@ -13,13 +15,19 @@ class GLCommandBuffer {
     commands = [];
 
     // Functions
-    execute() {
-        for (var command of this.commands)
-            command();
+    drawMesh(mesh, shader) { // rethink this...
+        this.commands.push(() => {
+            shader.bind();
+            mesh.vertexArray.bind();
+            glDraw(mesh.vertexArray.indicies.count);
+            mesh.vertexArray.unbind();
+            shader.unbind();
+        });
     }
 
-    clearCommands() { this.commands = []; }
+    clearRenderTarget(r, g, b, a) { glClear(r, g, b, a); }
 
+    clearCommands() { this.commands = []; }
     setStaticInt(name, value) { this.commands.push(() => Shader.setStaticInt(name, value)); }
     setStaticInt2(name, value) { this.commands.push(() => Shader.setStaticInt2(name, value)); }
     setStaticInt3(name, value) { this.commands.push(() => Shader.setStaticInt3(name, value)); }

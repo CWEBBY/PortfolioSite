@@ -1,2 +1,5 @@
-uniform float u_Time;
-uniform vec2 u_Resolution;
+uniform mat4 M;
+uniform mat4 VP;
+
+uniform float TIME;
+uniform vec2 RESOLUTION;
