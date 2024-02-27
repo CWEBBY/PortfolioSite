@@ -1,5 +1,6 @@
 uniform mat4 M;
-uniform mat4 VP;
+uniform mat4 V;
+uniform mat4 P;
 
 uniform float TIME;
 uniform vec2 RESOLUTION;

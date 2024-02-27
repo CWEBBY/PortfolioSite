@@ -4,10 +4,9 @@ import { GLFloat } from "./GL/Enums.js";
 export { Mesh };
 
 class Mesh {
-    constructor(attributes = [], indicies = []) {
-        this.vertexArray = new VertexArray({ a_Position: GLFloat(3), a_Texcoords: GLFloat(2) });
+    constructor(attributes = []) {
+        this.vertexArray = new VertexArray({ a_Position: GLFloat(3), a_Normal: GLFloat(3)/*, a_Texcoords: GLFloat(2)*/ });
         this.vertexArray.attributes.set(attributes);
-        this.vertexArray.indicies.set(indicies);
     }
 
 	// Vars
@@ -18,31 +17,56 @@ class Mesh {
         let file = await fetch(url);
         file = await file.text();
         file = file.split(/\r?\n/);
-
-        let attributes = [0, 0, 0, 0, 0];
-        let indicies = [];
-
+        let attributes = []; 
+        
+        let f = [];
+        let v = [[0, 0, 0]];
+        let vn = [[0, 0, 0]];
 
         for (let line of file) {
             if (line.startsWith("v ")) {
-                let args = line.split(/\s/);
-                attributes.push(Number(args[1]));
-                attributes.push(Number(args[2]));
-                attributes.push(Number(args[3]));
-                attributes.push(0);
-                attributes.push(1);
+                let args = line.split(/\s+/);
+                v.push([
+                    Number(args[1]), 
+                    Number(args[2]), 
+                    Number(args[3])
+                ]);
                 continue;
             }
 
-            if (line.startsWith("f")) {
+            if (line.startsWith("vn ")) {
                 let args = line.split(/\s+/);
-                indicies.push(Number(args[1].split("/")[0]));
-                indicies.push(Number(args[2].split("/")[0]));
-                indicies.push(Number(args[3].split("/")[0]));
+                vn.push([
+                    Number(args[1]), 
+                    Number(args[2]), 
+                    Number(args[3])
+                ]);
+                continue;
+            }
+
+            if (line.startsWith("f ")) {
+                f.push(line);
                 continue;
             }
         }
 
-        return new Mesh(attributes, indicies);
+        for (let face of f) {
+            let points = face.split(/\s+/);
+            for (let point = 1; point < points.length; point++) {
+                let indices = points[point].split('/');
+
+                let position = v[Number(indices[0])];
+                attributes.push(position[0]);
+                attributes.push(position[1]);
+                attributes.push(position[2]);
+
+                let normal = vn[Number(indices[2])];
+                attributes.push(normal[0]);
+                attributes.push(normal[1]);
+                attributes.push(normal[2]);
+            }
+        }
+
+        return new Mesh(attributes);
     }
 }

@@ -15,13 +15,13 @@ class GLCommandBuffer {
     commands = [];
 
     // Functions
-    drawMesh(mesh, shader) { // rethink this...
+    drawMesh(mesh, shader) {
         this.commands.push(() => {
             shader.bind();
             mesh.vertexArray.bind();
-            glDraw(mesh.vertexArray.indicies.count);
+            glDraw(mesh.vertexArray.count);
             mesh.vertexArray.unbind();
-            shader.unbind();
+            shader.unbind(); 
         });
     }
 

@@ -29,6 +29,4 @@ function glClear(r = 0, g = 0, b = 0, a = 0) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
-function glDraw(count = 0, primitive = "TRIANGLES") {
-    gl.drawElements(gl[primitive], count, gl.UNSIGNED_SHORT, 0);
-}
+function glDraw(count = 0) { gl.drawArrays(gl.TRIANGLES, 0, count); }

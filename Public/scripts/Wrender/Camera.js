@@ -5,6 +5,8 @@
 import { GLCommandBuffer } from "./GLCommandBuffer.js";
 import { glViewport } from "./GL/API.js";
 import { Mat4x4 } from "./Mat4x4.js";
+import { Vec3 } from "./Vec3.js";
+
 export { Camera, OrthographicCamera, PerspectiveCamera };
 
 // Camera
@@ -22,7 +24,7 @@ class Camera {
     context;
     commandBuffer;
 
-    translation;
+    translation = new Vec3();
     rotation; // maybe consolidate all transforms into a parent class?
 
     farClip;
@@ -30,6 +32,9 @@ class Camera {
 
     // Properties
     get aspectRatio() { return this.context.canvas.width / this.context.canvas.height; }
+    get transformMatrix() {
+        return Mat4x4.Translation(this.translation);
+    }
 
     // Functions
     render(scene) {
@@ -53,7 +58,7 @@ class Camera {
             rotationMat = Mat4x4.Rotation(entity.rotation);
             scaleMat = Mat4x4.Scale(entity.scale);
 
-            Mat4x4.multiply(RSMat, rotationMat, scaleMat);
+            //Mat4x4.multiply(RSMat, rotationMat, scaleMat);
             Mat4x4.multiply(TRSMat, translationMat, RSMat);
 
             this.glCommandBuffer.setStaticMatrix4x4("M", TRSMat.array);
@@ -103,13 +108,11 @@ class OrthographicCamera extends Camera {
         let halfHeight = this.size / 2;
         let halfWidth = (this.size * this.aspectRatio) / 2;
 
-        this.glCommandBuffer.setStaticMatrix4x4("VP",
-            Mat4x4.ortho(
-                -halfWidth, halfWidth,
-                -halfHeight, halfHeight,
-                this.nearClip, this.farClip
-            ).array
-        );
+        let projectionMatrix = Mat4x4.ortho(-halfWidth, halfWidth,
+            -halfHeight, halfHeight, this.nearClip, this.farClip);
+
+        this.glCommandBuffer.setStaticMatrix4x4("P", projectionMatrix.array);
+        this.glCommandBuffer.setStaticMatrix4x4("V", this.transformMatrix.array);
 
         super.render(scene);
     }

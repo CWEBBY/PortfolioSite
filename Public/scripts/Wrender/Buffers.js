@@ -37,7 +37,15 @@ class AttributeBuffer extends Buffer {
     constructor(layout, usage) {
         super("ARRAY_BUFFER", usage);
         this.layout = layout;
+
+        this.stride = 0;
+        Object.values(this.layout).forEach(
+            attributeType => this.stride += attributeType.length);
     }
+
+    // Vars
+    layout;
+    stride;
 
     // Functions 
     bind() {

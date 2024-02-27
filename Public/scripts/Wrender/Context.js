@@ -19,12 +19,14 @@ class Context {
         window.addEventListener('resize', () => this.resize());
 
         this.blitQuad = new VertexArray({ a_Position: GLFloat(2), a_Texcoords: GLFloat(2) });
-        this.blitQuad.indicies.set([0, 1, 2, 2, 3, 0]);
         this.blitQuad.attributes.set([
             /* #1 */    /* Pos */ -1, -1,  /* UV */ 0, 0,
             /* #2 */    /* Pos */ -1, 1,   /* UV */ 0, 1,
-            /* #3 */    /* Pos */ 1, 1,    /* UV */ 1, 1,
-            /* #4 */    /* Pos */ 1, -1,   /* UV */ 1, 0
+            /* #3 */    /* Pos */  1, 1,    /* UV */ 1, 1,
+
+            /* #4 */    /* Pos */ 1, 1,   /* UV */ 1, 1,
+            /* #5 */    /* Pos */ 1, -1,   /* UV */ 1, 0,
+            /* #6 */    /* Pos */ -1, -1,   /* UV */ 0, 0,
         ]);
     }
 
@@ -44,7 +46,7 @@ class Context {
         this.blitQuad.bind();
         {
             glViewport(0, 0, this.canvas.width, this.canvas.height);
-            glDraw(this.blitQuad.indicies.count);
+            glDraw(this.blitQuad.count);
         }
         this.blitQuad.unbind();
         shader.unbind();

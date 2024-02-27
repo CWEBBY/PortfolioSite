@@ -43,28 +43,30 @@ async function initResources(banner) {
     let testShader = await Shader.fromURL("./resources/gl/shaders/TestShader.glsl");
 
 
-    let camera = new OrthographicCamera(banner.context, { nearClip: 0, farClip: 100, size: 10 });
+    let camera = new OrthographicCamera(banner.context, { nearClip: -200, farClip: 200, size: 10 });
     let scene = new Scene({ 
         entities: [
             leaderF16 = new Entity(testShader, f16Mesh),
-            leftF16 = new Entity(testShader, f16Mesh),
-            rightF16 = new Entity(testShader, f16Mesh),
+            //leftF16 = new Entity(testShader, f16Mesh),
+            //rightF16 = new Entity(testShader, f16Mesh),
         ]
     });
 
+    camera.translation = new Vec3(0, 0, -1);
+
     banner.covers.push(() => {
         leaderF16.rotation = new Vec3(toRadians(-30 + Math.sin(Clock.current)), toRadians(-90 + + Math.sin(Clock.current)), toRadians(-60 + Math.sin(Clock.current)));
-        leftF16.rotation = new Vec3(toRadians(-30 + Math.sin(Clock.current)), toRadians(-90 + + Math.sin(Clock.current)), toRadians(-60 + Math.sin(Clock.current)));
-        rightF16.rotation = new Vec3(toRadians(-30 + Math.sin(Clock.current)), toRadians(-90 + + Math.sin(Clock.current)), toRadians(-60 + Math.sin(Clock.current)));
+        //leftF16.rotation = new Vec3(toRadians(-30 + Math.sin(Clock.current)), toRadians(-90 + + Math.sin(Clock.current)), toRadians(-60 + Math.sin(Clock.current)));
+        //rightF16.rotation = new Vec3(toRadians(-30 + Math.sin(Clock.current)), toRadians(-90 + + Math.sin(Clock.current)), toRadians(-60 + Math.sin(Clock.current)));
 
 
         leaderF16.rotation.z += Math.sin(Clock.current) * .5;
-        leftF16.rotation.z += Math.sin(Clock.current - Math.sin(Clock.current * 2)) * .25;
-        rightF16.rotation.z += Math.sin(Clock.current - Math.cos(Clock.current * 2)) * .125;
+        //leftF16.rotation.z += Math.sin(Clock.current - Math.sin(Clock.current * 2)) * .25;
+        //rightF16.rotation.z += Math.sin(Clock.current - Math.cos(Clock.current * 2)) * .125;
 
         leaderF16.translation = new Vec3(-2 + (Math.sin(Clock.current / 1.15) / 2), 2 + (Math.sin(Clock.current / 3) / 2), 50);
-        leftF16.translation = new Vec3(2 + (Math.sin(Clock.current / 1.15) / 2), 1 + (Math.sin(Clock.current / 3) / 2), 55);
-        rightF16.translation = new Vec3(1 + (Math.sin(Clock.current / 1.15) / 2), -1 + (Math.sin(Clock.current / 3) / 2), 60);
+        //leftF16.translation = new Vec3(2 + (Math.sin(Clock.current / 1.15) / 2), 1 + (Math.sin(Clock.current / 3) / 2), 55);
+        //rightF16.translation = new Vec3(1 + (Math.sin(Clock.current / 1.15) / 2), -1 + (Math.sin(Clock.current / 3) / 2), 60);
         camera.render(scene);
     });
 
